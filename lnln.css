@@ -201,7 +201,7 @@
 
 }
 
-p {line-height: 170%; color: rgb(20, 42, 53); padding-left: 12px;}
+p {line-height: 170%; color: rgb(20, 42, 53); padding-left: 12px; text-indent: 1em;}
 table {line-height: normal;color: rgb(20, 42, 53); border: rgb(20, 42, 53); }
 th {border: none; background-color: teal; color: white; padding: 10px 15px; }
 td {border: none; background-color: white; padding: 10px 15px; }
