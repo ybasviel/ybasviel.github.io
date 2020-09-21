@@ -14,7 +14,12 @@ for category in categories:
     #ディレクトリ内のhtmlファイルのリストを習得
     files = glob.glob(category + "*.html")
     #相対パスの中からディレクトリの名前を習得
-    categoryname = re.sub('/','',re.sub('\./','',category))
+    titlelist = glob.glob(category + "*.title")
+    if len(titlelist) == 1:
+        title = titlelist[0]
+        categoryname = re.sub('\.title','',re.sub('\./.*/','',title))
+    else:
+        print("エラー タイトルを示すファイルが複数存在しています")
 
     linksforhome += "<li>\n<a>" + categoryname + "<span class=\"caret\"></span></a>\n<div>\n<ul>\n"
     links += "<li>\n<a>" + categoryname + "<span class=\"caret\"></span></a>\n<div>\n<ul>\n"
