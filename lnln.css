@@ -5,7 +5,7 @@ body { margin: 0px; font-family: sans-serif;}
     grid-template-columns: 1fr;
     grid-template-rows: 5em 1fr 3em }
 header { grid-area: a; background: rgb(20,42,53);  padding-left: 1em }
-section { grid-area: c; background: rgb(244,243,250); padding-left: 1em }
+section { grid-area: c; background: rgb(244,243,250); padding-left: 1em; padding-right: 1em }
 footer { grid-area: d; background: rgb(20,42,53); }
 address { text-align: right; color: white; margin-right:1em;}
 h1 {color: white; font-size: 2em;}
@@ -28,7 +28,6 @@ li{max-width: 60em;}
 	padding-top: 1/2em;
 	padding-bottom: 1/2em;
 	overflow: hidden;
-	width: 98%;
 }
 .cp_navi ul {
 	margin: 0;
