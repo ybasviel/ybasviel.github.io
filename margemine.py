@@ -1,5 +1,6 @@
 import glob
 import re
+import sys
 
 #ディレクトリを習得
 categories = glob.glob("./*/")
@@ -20,6 +21,7 @@ for category in categories:
         categoryname = re.sub('\.title','',re.sub('\./.*/','',title))
     else:
         print("エラー タイトルを示すファイルが複数存在しています")
+        sys.exit()
 
     linksforhome += "<li>\n<a>" + categoryname + "<span class=\"caret\"></span></a>\n<div>\n<ul>\n"
     links += "<li>\n<a>" + categoryname + "<span class=\"caret\"></span></a>\n<div>\n<ul>\n"
