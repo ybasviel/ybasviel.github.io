@@ -6,8 +6,8 @@ import sys
 categories = glob.glob("./*/")
 
 #最終的に突っ込みたいリンクをこれらの変数に綴っていく
-linksforhome ="<div class=\"cp_navi\">\n<ul>\n<li><a href=\"./home.html\">Home</a></li>\n"
-links ="<div class=\"cp_navi\">\n<ul>\n<li><a href=\"../home.html\">Home</a></li>"
+linksforhome ="<div class=\"cp_navi\">\n<ul>\n<li><a href=\"./\">Home</a></li>\n"
+links ="<div class=\"cp_navi\">\n<ul>\n<li><a href=\"../\">Home</a></li>"
 
 #各ディレクトリ内ごとの作業
 for category in categories:
@@ -66,11 +66,11 @@ for category in categories:
             file.write(onew)
 
 #home.htmlだけは別の操作
-with open("./home.html") as file:
+with open("./index.html") as file:
     nakami = file.read()
     onew = re.sub("<div class=\"cp_navi\">.*</div class=\"cp_navi\">",linksforhome, nakami,flags=re.DOTALL)
 
-with open("./home.html", mode="w") as file:
+with open("./index.html", mode="w") as file:
     file.write(onew)
 
 print("Done!!\n")
