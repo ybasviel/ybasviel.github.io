@@ -3,7 +3,7 @@ body { margin: 0px; font-family: sans-serif;}
 .main { display: grid; width: 1fr; height: 100vh;
     grid-template-areas: "a" "c" "d";
     grid-template-columns: 1fr;
-    grid-template-rows: 5em 1fr 3em }
+    grid-template-rows: 5em 1fr 2em }
 header { grid-area: a; background: rgb(20,42,53);  padding-left: 1em }
 section { grid-area: c; background: rgb(244,243,250); padding-left: 1em; padding-right: 1em }
 footer { grid-area: d; background: rgb(20,42,53); }
@@ -14,7 +14,7 @@ p {line-height: 170%; color: rgb(20, 42, 53); padding-left: 1em; text-indent: 1e
 table {line-height: normal;color: rgb(20, 42, 53); border: rgb(20, 42, 53); }
 th {border: none; background-color: teal; color: white; padding: 10px 15px; }
 td {border: none; background-color: white; padding: 10px 15px; }
-img {height:30vh; max-width: 98%;}
+img {max-height:37vh; max-width: 98%;}
 li{max-width: 60em;}
 
 .cp_navi {
