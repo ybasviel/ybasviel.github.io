@@ -2,6 +2,8 @@
 	--main-bg-color: rgb(244, 243, 250);
 	--main-color: #f47120;
 	--sub-color: #f9a81c; 
+
+	--dark-bg: rgb(20,42,53);
   }
 
 
@@ -108,8 +110,35 @@ li{max-width: 60em;}
 }
 
 @media (prefers-color-scheme: dark){
-	section {background: #2E2E2E}
+	section {background: var(--dark-bg)}
 	p {color: white}
-	ul{color: white}
+	ul{color: white; background: ;}
+	.cp_navi {
+		background-color: #ffffff;
+		border: 1px solid #dedede;
+		border-radius: 4px;
+		box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
+		color: #888888;
+	}
+	.cp_navi > ul > li > a > .caret {
+		border-top: 4px solid #aaaaaa;
+		border-right: 4px solid transparent;
+		border-left: 4px solid transparent;
+		content: '';
+		display: inline-block;
+		height: 0;
+		width: 0;
+		vertical-align: middle;
+		-webkit-transition: color 0.1s linear;
+				transition: color 0.1s linear;
+	}
+	.cp_navi > ul > li > a {
+		color: #aaaaaa;
+		display: block;
+		line-height: 56px;
+		padding: 0 10px;
+		text-decoration: none;
+		font-size: 1em;
+	}
 }
   
