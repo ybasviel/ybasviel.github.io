@@ -107,9 +107,8 @@ li{max-width: 60em;}
 	background-color: rgba( 255, 255, 255, 0.1);
 }
 
-@media prefers-color-scheme: dark;
-{
-	section { grid-area: c; background: #2E2E2E !important; padding-left: 1em; padding-right: 1em;}
-	p {line-height: 170%; padding-left: 1em; text-indent: 1em; max-width: 65em; color: white !important;}
+@media (prefers-color-scheme: dark){
+	section {background: #2E2E2E !important;}
+	p {color: white !important;}
 }
   
