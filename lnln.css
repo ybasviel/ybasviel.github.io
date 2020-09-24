@@ -8,7 +8,7 @@
   }
 
 
-body { margin: 0px; font-family: sans-serif;}
+body { margin: 0px; font-family: sans-serif; background: var(--main-color);}
 .main { display: grid; width: 1fr; height: 100vh;
     grid-template-areas: "a" "c" "d";
     grid-template-columns: 1fr;
@@ -111,7 +111,6 @@ li{max-width: 60em;}
 }
 
 @media (prefers-color-scheme: dark){
-	body{background: var(--dark-bg);}
 	section {background: var(--dark-bg)}
 	p {color: white}
 	ul{color: white;}
