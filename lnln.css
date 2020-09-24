@@ -1,18 +1,24 @@
+:root {
+	--main-bg-color: rgb(244, 243, 250);
+	--main-color: #f47120;
+	--sub-color: #f9a81c; 
+  }
+
 
 body { margin: 0px; font-family: sans-serif;}
 .main { display: grid; width: 1fr; height: 100vh;
     grid-template-areas: "a" "c" "d";
     grid-template-columns: 1fr;
     grid-template-rows: 5em 1fr 2em }
-header { grid-area: a; background: rgb(20,42,53);  padding-left: 1em }
-section { grid-area: c; background: rgb(244,243,250); padding-left: 1em; padding-right: 1em }
-footer { grid-area: d; background: rgb(20,42,53); }
+header { grid-area: a; background: var(--main-color);  padding-left: 1em }
+section { grid-area: c; background: var(--main-bg-color); padding-left: 1em; padding-right: 1em }
+footer { grid-area: d; background: var(--main-color); }
 address { text-align: right; color: white; margin-right:1em;}
 h1 {color: white; font-size: 2em;}
-h2 {color: rgb(20, 42, 53);}
-p {line-height: 170%; color: rgb(20, 42, 53); padding-left: 1em; text-indent: 1em; max-width: 65em;}
-table {line-height: normal;color: rgb(20, 42, 53); border: rgb(20, 42, 53); }
-th {border: none; background-color: teal; color: white; padding: 10px 15px; }
+h2 {color: var(--main-color);}
+p {line-height: 170%; padding-left: 1em; text-indent: 1em; max-width: 65em;}
+table {line-height: normal;}
+th {border: none; background-color: var(--sub-color); color: white; padding: 10px 15px; }
 td {border: none; background-color: white; padding: 10px 15px; }
 img {max-height:37vh; max-width: 98%;}
 li{max-width: 60em;}
@@ -60,7 +66,7 @@ li{max-width: 60em;}
     font-size: 1em;
 }
 .cp_navi > ul > li:hover {
-	background-color: rgb(218, 60, 65);
+	background-color: #ff3b17;
 }
 .cp_navi > ul > li:hover > a {
     color: rgb( 255, 255, 255 );
@@ -69,7 +75,7 @@ li{max-width: 60em;}
 	border-top-color: rgb( 255, 255, 255 );
 }
 .cp_navi > ul > li > div {
-	background-color: rgb(218, 60, 65);
+	background-color: #ff3b17;
 	border-top: 0;
 	border-radius: 0 0 4px 4px;
 	box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
@@ -101,3 +107,9 @@ li{max-width: 60em;}
 	background-color: rgba( 255, 255, 255, 0.1);
 }
 
+@media prefers-color-scheme: dark;
+{
+	section { grid-area: c; background: #2E2E2E !important; padding-left: 1em; padding-right: 1em;}
+	p {line-height: 170%; padding-left: 1em; text-indent: 1em; max-width: 65em; color: white !important;}
+}
+  
