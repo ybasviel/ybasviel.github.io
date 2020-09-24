@@ -125,5 +125,6 @@ li{max-width: 60em;}
 		color: white;
 	}
 	.cp_navi > ul > li > a {color: white;}
+	.cp_navi > ul > li > a > .caret {border-top: 4px solid #ffffff;}
 }
   
