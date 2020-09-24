@@ -118,6 +118,7 @@ li{max-width: 60em;}
 	a{color:#93d7f7;}
 	td {background: var(--dark-bg2); color: white;}
 	h3{color:white;}
+	address{color:var(--dark-bg);}
 	.cp_navi {
 		background-color: var(--dark-bg2);
 		border: 1px solid #000000;
