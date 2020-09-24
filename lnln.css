@@ -111,6 +111,7 @@ li{max-width: 60em;}
 }
 
 @media (prefers-color-scheme: dark){
+	body{background: var(--dark-bg);}
 	section {background: var(--dark-bg)}
 	p {color: white}
 	ul{color: white;}
