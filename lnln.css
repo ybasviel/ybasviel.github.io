@@ -26,6 +26,10 @@ td {border: none; background-color: white; padding: 10px 15px; }
 img {max-height:37vh; max-width: 98%;}
 li{max-width: 60em;}
 
+.share{
+	text-indent: 2em;
+}
+
 .cp_navi {
 	background-color: #ffffff;
 	border: 1px solid #dedede;
