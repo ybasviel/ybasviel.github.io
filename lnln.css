@@ -27,7 +27,8 @@ img {max-height:37vh; max-width: 98%;}
 li{max-width: 60em;}
 
 .share{
-	text-indent: 2em;
+	text-indent: 1em;
+	margin: 0.5em;
 }
 
 .cp_navi {
