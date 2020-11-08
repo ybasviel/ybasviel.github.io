@@ -13,11 +13,11 @@ body { margin: 0px; font-family: sans-serif; background: var(--main-color);}
     grid-template-areas: "a" "c" "d";
     grid-template-columns: 1fr;
     grid-template-rows: 5em 1fr 2em }
-header { grid-area: a; background: var(--main-color);  padding-left: 1em }
+header { grid-area: a; background: var(--main-color);  padding: 1em }
 section { grid-area: c; background: var(--main-bg-color); padding-left: 1em; padding-right: 1em }
 footer { grid-area: d; background: var(--main-color); }
 address { text-align: right; color: white; margin-right:1em;}
-h1 {color: white; font-size: 2em;}
+h1 {color: white; font-size: 2em; margin:0;}
 h2 {color: var(--main-color);}
 p {line-height: 170%; padding-left: 1em; text-indent: 1em; max-width: 65em;}
 table {line-height: normal;}
