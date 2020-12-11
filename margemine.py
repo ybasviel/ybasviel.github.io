@@ -6,8 +6,9 @@ import sys
 categories = glob.glob("./*/")
 
 #最終的に突っ込みたいリンクをこれらの変数に綴っていく
-linksforhome ="<div class=\"cp_navi\">\n<ul>\n<li><a href=\"./\">Home</a></li>\n"
-links ="<div class=\"cp_navi\">\n<ul>\n<li><a href=\"../\">Home</a></li>"
+linksforindex ="<ul class=\"url-list\">\n"
+linksforhome = "<div class=\"cp_navi\">\n    <ul>\n      <li><a href=\"./\">Home</a></li>\n"
+links ="<div class=\"cp_navi\">\n    <ul>\n      <li><a href=\"../\">Home</a></li>\n"
 
 #各ディレクトリ内ごとの作業
 for category in categories:
@@ -23,28 +24,44 @@ for category in categories:
         print("エラー タイトルを示すファイルが複数存在しています")
         sys.exit()
 
-    linksforhome += "<li>\n<a>" + categoryname + "<span class=\"caret\"></span></a>\n<div>\n<ul>\n"
-    links += "<li>\n<a>" + categoryname + "<span class=\"caret\"></span></a>\n<div>\n<ul>\n"
+    #linksforindex += "<li>\n<a>" + categoryname + "<span class=\"caret\"></span></a>\n<div>\n<ul>\n"
+    links += "      <li><a href=\"." + category + "index.html\">" + categoryname + "</a><li>\n"
+    linksforhome += "      <li><a href=\"" + category + "index.html\">" + categoryname + "</a><li>\n"
 
     #各ファイルごとの作業
     for url in files:
+        if url[-10:] == "index.html":
+            pass
+        else:
+            #ファイルを開いて
+            with open(url) as file:
+                nakami = file.read()
+                #titleタグからページ名を習得，頭についてる「りんりん - 」は外す
+                pagename = re.sub("りんりん - ","",re.sub("</title>.*", "",re.sub(".*<title>","",nakami.replace('\n',' '))))
+                linksforindex += "      <li><a href=\"." + url + "\">" + pagename + "</a></li>\n"
 
-        #ファイルを開いて
-        with open(url) as file:
-            nakami = file.read()
+    linksforindex += "    </ul class=\"url-list\">\n"
 
-            #titleタグからページ名を習得，頭についてる「りんりん - 」は外す
-            pagename = re.sub("りんりん - ","",re.sub("</title>.*", "",re.sub(".*<title>","",nakami.replace('\n',' '))))
 
-            linksforhome += "<li><a href=\"" + url + "\">" + pagename + "</a></li>\n"
-            links += "<li><a href=\"" + url.replace("./","../") + "\">" + pagename + "</a></li>\n"
-    
-    linksforhome += "</ul>\n</div>\n</li>\n"
-    links += "</ul>\n</div>\n</li>\n"
+    #index.htmlだけは別の操作
+    files = glob.glob(category+ "index.html")
+    if len(files) == 1:
+        for url in files:
+            with open(url) as file:
+                nakami = file.read()
+                onew = re.sub("<ul class=\"url-list\">.*</ul class=\"url-list\">",linksforindex, nakami,flags=re.DOTALL)
+            with open(url, mode="w") as file:
+                file.write(onew)
+    else:
+        print("エラー index.htmlが複数存在しています")
+        sys.exit()
+
+    linksforindex ="<ul class=\"url-list\">\n"
 
 #後に書き換える際，別の</div>タグに引っかからないように</div class="cp_navi">としている
-linksforhome += "</ul>\n</div class=\"cp_navi\">"
-links += "</ul>\n</div class=\"cp_navi\">"
+linksforindex += "</ul class=\"url-list\">"
+links += "    <ul>\n  </div class=\"cp_navi\">"
+linksforhome += "    <ul>\n  </div class=\"cp_navi\">"
 
 for category in categories:
     files = glob.glob(category + "*.html")
@@ -54,7 +71,7 @@ for category in categories:
             nakami = file.read()
             #ページ名を取得
             pagename = re.sub("りんりん - ","",re.sub("</title>.*", "",re.sub(".*<title>","",nakami.replace('\n',' '))))
-            
+
             #リンクを書き込む
             onew = re.sub("<div class=\"cp_navi\">.*</div class=\"cp_navi\">",links, nakami,flags=re.DOTALL)
             #cssの相対パスを書き込む(要らないかもしれないけど自分がミスったときのために念の為)
@@ -65,12 +82,24 @@ for category in categories:
         with open(url, mode="w") as file:
             file.write(onew)
 
-#home.htmlだけは別の操作
 with open("./index.html") as file:
     nakami = file.read()
     onew = re.sub("<div class=\"cp_navi\">.*</div class=\"cp_navi\">",linksforhome, nakami,flags=re.DOTALL)
-
-with open("./index.html", mode="w") as file:
+with open("./index.html", mode ="w") as file:
     file.write(onew)
+
+for category in categories:
+    files = glob.glob(category + "*.html")
+    for url in files:
+        with open(url) as file:
+            nakami = file.read()
+            #titleタグからページ名を習得，頭についてる「りんりん - 」は外す
+            pagename = re.sub("りんりん - ","",re.sub("</title>.*", "",re.sub(".*<title>","",nakami.replace('\n',' '))))
+            linksforindex += "      <li><a href=\"" + url + "\">" + pagename + "</a></li>\n"
+            metatag = "<!--置換用タグ1-->\n    <meta property=\"og:url\" content=\"https://lnln4ch.netlify.app/" + re.sub("\./","",url) + "\">\n    <meta property=\"og:title\" content=\"りんりん - " + pagename + "\">\n    <!--置換用タグ2-->"
+
+            onew = re.sub("<!--置換用タグ1-->.*<!--置換用タグ2-->",metatag,nakami,flags=re.DOTALL)
+        with open(url,mode="w") as file:
+            file.write(onew)
 
 print("Done!!\n")
