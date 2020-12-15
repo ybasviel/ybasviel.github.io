@@ -12,19 +12,50 @@ body { margin: 0px; font-family: sans-serif; background: var(--main-color);}
 .main { display: grid; width: 1fr; height: 100vh;
     grid-template-areas: "a" "c" "d";
     grid-template-columns: 1fr;
-    grid-template-rows: 5em 1fr 2em }
-header { grid-area: a; background: var(--main-color);  padding: 1em }
-section { grid-area: c; background: var(--main-bg-color); padding-left: 1em; padding-right: 1em }
-footer { grid-area: d; background: var(--main-color); }
-address { text-align: right; color: white; margin-right:1em;}
+	grid-template-rows: 5em 1fr 2em
+}
+header {
+	grid-area: a;
+	background: var(--main-color);
+	padding: 1em
+}
+section { 
+	grid-area: c;
+	background: var(--main-bg-color);
+	padding-left: 1em;
+	padding-right: 1em;
+}
+footer {
+	grid-area: d;
+	background: var(--main-color);
+}
+address {
+	text-align: right;
+	color: white;
+	margin-right:1em;
+}
 h1 {color: white; font-size: 2em; margin:0;}
 h2 {color: var(--main-color);}
-p {line-height: 170%; padding-left: 1em; text-indent: 1em; max-width: 65em;}
+p {
+	margin: 0;
+	line-height: 170%;
+	padding-left: 1em;
+	text-indent: 1em;
+	max-width: 65em;
+	line-break: strict;
+}
 table {line-height: normal;}
 th {border: none; background-color: var(--sub-color); color: white; padding: 10px 15px; }
 td {border: none; background-color: white; padding: 10px 15px; }
 img {max-height:37vh; max-width: 98%;}
 li{max-width: 60em;}
+h4{
+	margin: 0;
+	color: var(--dark-bg2);
+}
+pre{
+	max-width: 65em;
+}
 
 .share{
 	text-indent: 1em;

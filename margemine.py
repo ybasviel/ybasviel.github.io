@@ -5,6 +5,8 @@ import sys
 #ディレクトリを習得
 categories = glob.glob("./*/")
 
+categories.remove("./css/")
+
 #最終的に突っ込みたいリンクをこれらの変数に綴っていく
 linksforindex ="<ul class=\"url-list\">\n"
 linksforhome = "<div class=\"cp_navi\">\n    <ul>\n      <li><a href=\"./\">Home</a></li>\n"
@@ -75,7 +77,7 @@ for category in categories:
             #リンクを書き込む
             onew = re.sub("<div class=\"cp_navi\">.*</div class=\"cp_navi\">",links, nakami,flags=re.DOTALL)
             #cssの相対パスを書き込む(要らないかもしれないけど自分がミスったときのために念の為)
-            onew = onew.replace("<link href=\"lnln.css\" rel=\"stylesheet\">","<link href=\"../lnln.css\" rel=\"stylesheet\">")
+            #onew = onew.replace("<link href=\"lnln.css\" rel=\"stylesheet\">","<link href=\"../css/lnln.css\" rel=\"stylesheet\">")
             #titleの頭に「りんりん - 」をつける
             onew = re.sub("<title>.*</title>","<title>りんりん - " + pagename + "</title>",onew)
 
