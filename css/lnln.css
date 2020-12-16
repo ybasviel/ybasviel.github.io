@@ -8,34 +8,63 @@
   }
 
 
-body { margin: 0px; font-family: sans-serif; background: var(--main-color);}
-.main { display: grid; width: 1fr; height: 100vh;
-    grid-template-areas: "a" "c" "d";
-    grid-template-columns: 1fr;
-	grid-template-rows: 5em 1fr 2em
+body {
+	margin: 0px;
+	font-family: sans-serif;
+	background: var(--main-bg-color);
 }
+
+.main {
+	display: grid;
+	width: 1fr;
+	height: 100vh;
+    grid-template-areas: "l a r" "l c r" "l d r";
+    grid-template-columns: 1fr 65em 1fr;
+	grid-template-rows: 6em 1fr 2em
+}
+
 header {
 	grid-area: a;
 	background: var(--main-color);
-	padding: 1em
+	padding: 1em;
+	border-radius: 0.3em;
+	margin: 0.4em;
 }
+
 section { 
 	grid-area: c;
 	background: var(--main-bg-color);
 	padding-left: 1em;
 	padding-right: 1em;
 }
+
 footer {
 	grid-area: d;
 	background: var(--main-color);
 }
+
+.rside{
+	grid-area: r;
+	background-color: var(--main-bg-color);
+}
+.lside{
+	grid-area: l;
+	background-color: var(--main-bg-color);
+}
+
 address {
 	text-align: right;
 	color: white;
 	margin-right:1em;
 }
-h1 {color: white; font-size: 2em; margin:0;}
-h2 {color: var(--main-color);}
+h1 {
+	color: white;
+	font-size: 2em;
+	margin:0;
+}
+h2 {
+	color: var(--main-color);
+}
 p {
 	margin: 0;
 	line-height: 170%;
@@ -44,19 +73,34 @@ p {
 	max-width: 65em;
 	line-break: strict;
 }
-table {line-height: normal;}
-th {border: none; background-color: var(--sub-color); color: white; padding: 10px 15px; }
-td {border: none; background-color: white; padding: 10px 15px; }
-img {max-height:37vh; max-width: 98%;}
-li{max-width: 60em;}
-h4{
-	margin: 0;
-	color: var(--dark-bg2);
+table {
+	line-height: normal;
+}
+th {
+	border: none;
+	background-color: var(--sub-color);
+	color: white;
+	padding: 10px 15px;
+}
+td {
+	border: none;
+	background-color: white;
+	padding: 10px 15px;
+}
+img {
+	max-height:50vh;
+	max-width: 98%;
+	border-radius: 0.3em;
+}
+li{
+	max-width: 60em;
 }
 pre{
 	max-width: 65em;
 }
-
+code{
+	border-radius: 0.5em;
+}
 .share{
 	text-indent: 1em;
 	margin: 0.5em;
@@ -65,7 +109,7 @@ pre{
 .cp_navi {
 	background-color: #ffffff;
 	border: 1px solid #dedede;
-	border-radius: 0px; /*4px*/
+	border-radius: 0.3em; /*4px*/
 	box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
 	color: #888888;
 	display: block;
@@ -147,7 +191,18 @@ pre{
 }
 
 @media (prefers-color-scheme: dark){
+	body {
+		background: var(--dark-bg);
+	}
 	section {background: var(--dark-bg)}
+	.rside{
+		grid-area: r;
+		background-color: var(--dark-bg);
+	}
+	.lside{
+		grid-area: l;
+		background-color: var(--dark-bg);
+	}
 	p {color: white}
 	ul{color: white;}
 	ol{color:white;}
@@ -163,4 +218,11 @@ pre{
 	.cp_navi > ul > li > a {color: white;}
 	.cp_navi > ul > li > a > .caret {border-top: 4px solid #ffffff;}
 }
-  
+
+@media (max-width:1050px){
+    .main {grid-template-columns: 0 1fr 0;
+    }
+    img{
+        height:calc(19vw);
+    }
+}
