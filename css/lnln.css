@@ -99,6 +99,7 @@ li{
 }
 pre{
 	max-width: 65em;
+	white-space: pre-wrap
 }
 code{
 	border-radius: 0.5em;
