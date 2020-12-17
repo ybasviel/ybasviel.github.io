@@ -99,10 +99,12 @@ li{
 }
 pre{
 	max-width: 65em;
-	white-space: pre-wrap
+	white-space: pre-wrap;
+	min-width: 0;
 }
 code{
 	border-radius: 0.5em;
+	min-width: 0;
 }
 .share{
 	text-indent: 1em;
@@ -225,7 +227,13 @@ code{
 @media (max-width:1050px){
     .main {grid-template-columns: 0 1fr 0;
     }
-    img{
-        height:calc(19vw);
-    }
+    
+}
+
+@media (max-width:420px){
+	pre{
+		display: table;
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+	}
 }
