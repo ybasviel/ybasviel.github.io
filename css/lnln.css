@@ -76,6 +76,10 @@ p {
 }
 table {
 	line-height: normal;
+	display: block;
+	overflow-x: scroll;
+	white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
 }
 th {
 	border: none;
@@ -225,7 +229,8 @@ code{
 }
 
 @media (max-width:1050px){
-    .main {grid-template-columns: 0 1fr 0;
+    .main {
+		grid-template-columns: 0 1fr 0;
     }
     
 }
@@ -235,5 +240,10 @@ code{
 		display: table;
 		overflow: auto;
 		-webkit-overflow-scrolling: touch;
+		width: 85vw;
+	}
+	code{
+		white-space: pre-wrap;
+		width: 85vw;
 	}
 }
