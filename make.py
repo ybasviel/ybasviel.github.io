@@ -46,12 +46,12 @@ for url in htmlfiles:
             linksforindex += "      <li><a href=\"." + url + "\">" + pagename + " - " + date + "</a></li>\n"
 
             if first:
-                linksforarchive += "      <li>" + date[:-3] + "<ul>\n        <li><a href=\"." + url + "\">" + pagename + "</a>" + "</li>\n"
+                linksforarchive += "      <li>" + date[:-3] + "<ul>\n        <li><a href=\"." + url + "\">" + pagename + " - " + date + "</a>" + "</li>\n"
                 first = False
             elif former != date[:-3]:
-                linksforarchive += "      </ul></li>\n      <li>" + date[:-3] + "<ul>\n        <li><a href=\"." + url + "\">" + pagename + "</a>" + "</li>\n"
+                linksforarchive += "      </ul></li>\n      <li>" + date[:-3] + "<ul>\n        <li><a href=\"." + url + "\">" + pagename + " - " + date + "</a>" + "</li>\n"
             else:
-                linksforarchive += "        <li><a href=\"." + url + "\">" + pagename + "</a>" + "</li>\n"
+                linksforarchive += "        <li><a href=\"." + url + "\">" + pagename + " - " + date + "</a>" + "</li>\n"
             former = date[:-3]
 
 linksforindex += "    </ul class=\"url-list\">\n"

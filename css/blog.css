@@ -1,6 +1,12 @@
 p{
     white-space: pre-wrap;
 }
+h3{
+	margin: 0;
+}
 .date{
     color: var(--dark-bg2);
+}
+.tweet{
+	margin-left: 2em;
 }
