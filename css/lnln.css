@@ -72,7 +72,7 @@ p {
 	text-indent: 1em;
 	max-width: 65em;
 	line-break: strict;
-	letter-spacing: 0.6pt;
+	/*letter-spacing: 0.6pt;*/
 }
 table {
 	line-height: normal;
