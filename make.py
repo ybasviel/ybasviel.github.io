@@ -1,3 +1,5 @@
+#!/bin/python3
+
 import glob
 import re
 import sys
