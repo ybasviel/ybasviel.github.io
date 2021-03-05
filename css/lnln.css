@@ -176,16 +176,19 @@ code{
 
 @media (prefers-color-scheme: dark){
 	body {
+		background: black;
+	}
+	section {background: black}
+	.subsection{
 		background: var(--dark-bg);
 	}
-	section {background: var(--dark-bg)}
 	.rside{
 		grid-area: r;
-		background-color: var(--dark-bg);
+		background-color: black;
 	}
 	.lside{
 		grid-area: l;
-		background-color: var(--dark-bg);
+		background-color: black;
 	}
 	p {color: white}
 	ul{color: white;}
