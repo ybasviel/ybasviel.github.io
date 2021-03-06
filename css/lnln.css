@@ -35,8 +35,7 @@ header {
 section { 
 	grid-area: c;
 	background: var(--main-bg-color);
-	padding-left: 1em;
-	padding-right: 1em;
+
 }
 .subsection{
     margin: 0.6em;
