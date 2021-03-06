@@ -75,7 +75,7 @@ for category in ["./works/*.html","./blog/*.html"]:
             #titleタグからページ名を習得，頭についてる「りんりん - 」は外す
             pagename = re.sub("りんりん - ","",re.sub("</title>.*", "",re.sub(".*<title>","",nakami.replace('\n',' '))))
             linksforindex += "      <li><a href=\"" + url + "\">" + pagename + "</a></li>\n"
-            metatag = "<!--置換用タグ1-->\n    <meta property=\"og:url\" content=\"https://lnln4ch.netlify.app/" + re.sub("\./","",url) + "\">\n    <meta property=\"og:title\" content=\"りんりん - " + pagename + "\">\n    <!--置換用タグ2-->"
+            metatag = "<!--置換用タグ1-->\n    <meta property=\"og:url\" content=\"https://lnln.dev/" + re.sub("\./","",url) + "\">\n    <meta property=\"og:title\" content=\"りんりん - " + pagename + "\">\n    <!--置換用タグ2-->"
 
             onew = re.sub("<!--置換用タグ1-->.*<!--置換用タグ2-->",metatag,nakami,flags=re.DOTALL)
         with open(url,mode="w") as file:

@@ -32,6 +32,10 @@ header {
 	margin: 0.4em;
 }
 
+header > a{
+	text-decoration: none;
+}
+
 section { 
 	grid-area: c;
 	background: var(--main-bg-color);
@@ -124,9 +128,11 @@ h1 {
 	margin:0;
 }
 h2 {
-	margin: 0;
+	margin-top: 0;
+	margin-bottom: 0.5em;
 	color: var(--main-color);
 }
+
 p {
 	margin: 0;
 	line-height: 170%;
@@ -154,6 +160,9 @@ img {
 	max-height:50vh;
 	max-width: 98%;
 	border-radius: 0.3em;
+}
+ul{
+	margin: 0;
 }
 li{
 	max-width: 60em;
