@@ -207,6 +207,7 @@ code{
 }
 
 @media (max-width:420px){
+	.item {width: 100%;}
 	pre{
 		display: table;
 		overflow: auto;
