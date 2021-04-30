@@ -21,10 +21,12 @@ function rewrite()
 
     sdimg_url = "http://img.youtube.com/vi/" + youtube_id + "/sddefault.jpg";
     sd_link.href = sdimg_url;
+    sd_link.download = youtube_id + ".jpg"
     sd.src = sdimg_url;
 
     hdimg_url = "http://img.youtube.com/vi/" + youtube_id + "/maxresdefault.jpg"
     hd_link.href = hdimg_url;
+    hd_link.download = youtube_id + ".jpg"
     hd.src = hdimg_url;
 }
 
