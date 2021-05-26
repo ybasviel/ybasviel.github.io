@@ -83,7 +83,7 @@ section {
     font-size: 1em;
     font-weight: bold;
     padding: 0.5em 1em;
-    margin: 0.5;
+    margin: 0.3em;
     border-radius: 0.5em;
     text-align: center;
     text-indent: 0;
@@ -161,8 +161,8 @@ td {
 	background-color: white;
 	padding: 10px 15px;
 }
-img {
-	max-height:40vh;
+.subject-img > a > img {
+	max-height: 40vh;
 	max-width: 98%;
 	border-radius: 0.3em;
 }
@@ -213,17 +213,6 @@ code{
 	address{color:var(--dark-bg);}
 
 	.linkbutton {
-		display:inline-block;
-		text-decoration: none;
-		font-family: sans-serif;
-		font-size: 1em;
-		font-weight: bold;
-		padding: 0.5em 1em;
-		margin: 1em;
-		border-radius: 0.5em;
-		text-align: center;
-		text-indent: 0;
-	
 		color: #fff;
 		background-color: var(--main-color);
 		box-shadow: 0 2px 2px 0 rgba(255, 255, 255, 0.14),
