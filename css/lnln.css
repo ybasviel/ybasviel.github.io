@@ -49,6 +49,11 @@ section {
     background: var(--sub-section-color);
 }
 
+.subject-img{
+	text-align: center;
+}
+
+
 .itemize{
     text-align: center;
 }
@@ -157,7 +162,7 @@ td {
 	padding: 10px 15px;
 }
 img {
-	max-height:50vh;
+	max-height:40vh;
 	max-width: 98%;
 	border-radius: 0.3em;
 }
