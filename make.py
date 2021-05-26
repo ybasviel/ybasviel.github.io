@@ -15,7 +15,7 @@ import sys
 #        #ファイルを開いて
 #        with open(url) as file:
 #            nakami = file.read()
-#            #titleタグからページ名を習得，頭についてる「りんりん - 」は外す
+#            #titleタグからページ名を習得、頭についてる「りんりん - 」は外す
 #            pagename = re.sub("りんりん - ","",re.sub("</title>.*", "",re.sub(".*<title>","",nakami.replace('\n',' '))))
 #            linksforindex += "      <li><a href=\"." + url + "\">" + pagename + "</a></li>\n"
 #
@@ -42,7 +42,7 @@ for url in htmlfiles:
         #ファイルを開いて
         with open(url) as file:
             nakami = file.read()
-            #titleタグからページ名を習得，頭についてる「りんりん - 」は外す
+            #titleタグからページ名を習得、頭についてる「りんりん - 」は外す
             pagename = re.sub("りんりん - ","",re.sub("</title>.*", "",re.sub(".*<title>","",nakami.replace('\n',' '))))
             date = re.sub("</div class=\"date\">.*", "",re.sub(".*<div class=\"date\">","",nakami.replace('\n',' ')))
             linksforindex += "      <li><a href=\"." + url + "\">" + pagename + " - " + date + "</a></li>\n"
@@ -72,7 +72,7 @@ for category in ["./works/*.html","./blog/*.html"]:
     for url in files:
         with open(url) as file:
             nakami = file.read()
-            #titleタグからページ名を習得，頭についてる「りんりん - 」は外す
+            #titleタグからページ名を習得、頭についてる「りんりん - 」は外す
             pagename = re.sub("りんりん - ","",re.sub("</title>.*", "",re.sub(".*<title>","",nakami.replace('\n',' '))))
             linksforindex += "      <li><a href=\"" + url + "\">" + pagename + "</a></li>\n"
             metatag = "<!--置換用タグ1-->\n    <meta property=\"og:url\" content=\"https://lnln.dev/" + re.sub("\./","",url) + "\">\n    <meta property=\"og:title\" content=\"りんりん - " + pagename + "\">\n    <!--置換用タグ2-->"
