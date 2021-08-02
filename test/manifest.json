@@ -1,0 +1,10 @@
+{
+    "name": "KokenWiki",
+    "short_name": "KokenWiki",
+    "theme_color": "#ff0000",
+    "background_color": "#ffffff",
+    "display": "fullscreen",
+    "orientation": "portrait",
+    "scope": "https://wiki.koken.club.uec.ac.jp/",
+    "start_url": "https://wiki.koken.club.uec.ac.jp"
+}
