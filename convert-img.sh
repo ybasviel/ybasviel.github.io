@@ -7,7 +7,7 @@ else
     for x in "$@"
     do
         filename=`basename "$x" | sed -e "s/\..*//g"`
-	directoryname=`dirname "$x"`
-	convert ${x} -resize 600x600 ${directoryname}/small-${filename}.jpg
+	    directoryname=`dirname "$x"`
+	    convert ${x} -resize 600x600 ${directoryname}/small-${filename}.jpg
     done
 fi
