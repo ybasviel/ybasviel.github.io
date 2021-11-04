@@ -44,7 +44,7 @@ with open("./blog/index.html", mode="w") as file:
     file.write(onew)
 
 
-for category in ["./works/*.html","./blog/*.html"]:
+for category in ["./works/*/*.html","./blog/*.html"]:
     files = glob.glob(category)
     for url in files:
         with open(url) as file:
