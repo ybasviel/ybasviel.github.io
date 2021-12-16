@@ -7,6 +7,9 @@ h3{
 .date{
     color: #746e6e;
 }
+.centering{
+    text-align: center;
+}
 .tweet{
-	margin-left: 2em;
+    display: inline-block; 
 }

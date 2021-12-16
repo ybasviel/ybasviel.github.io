@@ -87,7 +87,9 @@ section{
 .itemize{
     text-align: center;
 }
-.item {width: 20em; display: inline-block; 
+.item {
+	width: 20em; 
+	display: inline-block; 
     padding: 1em; 
     vertical-align: top; 
     box-sizing: border-box;
