@@ -40,7 +40,7 @@ for url in htmlfiles:
                 linksforarchive += "        <li><a href=\"." + url + "\">" + pagename + " - " + date + "</a>" + "</li>\n"
             former = date[:-3]
 
-linksforindex += "    </ul class=\"url-list\">\n"
+linksforindex += "    </ul class=\"url-list\">"
 linksforarchive += "      </ul></li>\n    </ul class=\"archive\">"
 
 with open("./blog/index.html") as file:
