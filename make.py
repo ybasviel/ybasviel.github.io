@@ -12,6 +12,9 @@ first = True
 
 htmlfiles = glob.glob("./blog/*")
 htmlfiles.sort(reverse=True)
+
+latest3 = 0 #最新の3件のみ表示
+
 for url in htmlfiles:
     if url[-10:] == "index.html":
         pass
@@ -24,7 +27,9 @@ for url in htmlfiles:
             date = url[-10:] #re.sub("</div class=\"date\">.*", "",re.sub(".*<div class=\"date\">","",nakami.replace('\n',' ')))
             date = re.sub("-","/",date)
 
-            linksforindex += "      <li><a href=\"." + url + "\">" + pagename + " - " + date + "</a></li>\n"
+            if latest3 < 3:
+                linksforindex += "      <li><a href=\"." + url + "\">" + pagename + " - " + date + "</a></li>\n"
+                latest3 = latest3 + 1
 
             if first:
                 linksforarchive += "      <details><summary>" + date[:-3] + "</summary>\n        <li><a href=\"." + url + "\">" + pagename + " - " + date + "</a>" + "</li>\n"
