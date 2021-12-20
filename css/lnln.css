@@ -51,7 +51,7 @@ body {
 	height: 100vh;
     grid-template-areas: "l a r" "l c r" "l d r";
     grid-template-columns: 1fr 65em 1fr;
-	grid-template-rows: 6em 1fr 2em
+	grid-template-rows: 6em 1fr 2.5em
 }
 
 header {
@@ -142,7 +142,6 @@ td > .linkbutton
 
 footer {
 	grid-area: d;
-	background: var(--main-color);
 }
 
 .rside{
@@ -157,7 +156,10 @@ footer {
 address {
 	text-align: right;
 	color: white;
-	margin-right:1em;
+	background: var(--main-color);
+	margin: 0 0.4em 0.4em 0.4em;
+	padding: 0.4em;
+	border-radius: 0.2em;
 }
 h1 {
 	color: white;
