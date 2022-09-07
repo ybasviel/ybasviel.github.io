@@ -103,7 +103,6 @@ section{
     border-radius: 0.5em;
 }
 .item > p {
-    text-indent: 1em; 
     margin: 1em;
     text-align: left;
 } /*リンク集のところ*/
@@ -180,7 +179,7 @@ p {
 	text-indent: 1em;
 	max-width: 65em;
 	line-break: strict;
-	/*letter-spacing: 0.6pt;*/
+	text-indent: 0;
 }
 table {
 	line-height: normal;
