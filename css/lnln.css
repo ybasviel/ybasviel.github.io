@@ -79,10 +79,34 @@ section{
     background: var(--sub-section-color);
 }
 
+/*とりあえず残す*/
 .subject-img{
 	text-align: center;
 }
 
+.subject-img > a > img {
+	max-height: 30vh;
+	max-width: 98%;
+	border-radius: 0.3em;
+}
+
+figure{
+	text-align: center;
+}
+
+figcaption{
+	margin-bottom: 2em;
+}
+
+figcaption::before { content: "「"; }
+
+figcaption::after { content: "」"; }
+
+figure > a > img { 
+	max-height: 30vh;
+	max-width: 98%;
+	border-radius: 0.3em;
+}
 
 .itemize{
     text-align: center;
@@ -195,11 +219,7 @@ td {
 	background-color: white;
 	padding: 10px 15px;
 }
-.subject-img > a > img {
-	max-height: 40vh;
-	max-width: 98%;
-	border-radius: 0.3em;
-}
+
 ul{
 	margin: 0;
 	padding-left:1.5em;
