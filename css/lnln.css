@@ -92,11 +92,9 @@ section{
 
 figure{
 	text-align: center;
-}
-
-figcaption{
 	margin-bottom: 2em;
 }
+
 
 figcaption::before { content: "「"; }
 
