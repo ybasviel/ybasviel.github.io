@@ -218,8 +218,9 @@ td {
 }
 
 ul{
-	margin: 0;
-	padding-left:1.5em;
+	margin-left:1em;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
 }
 li{
 	max-width: 60em;
