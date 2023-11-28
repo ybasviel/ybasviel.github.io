@@ -2,6 +2,8 @@
 
 import glob
 import re
+import os
+from shutil import copytree, copyfile
 
 NUMBER_OF_LATEST_BLOG = 3
 
@@ -69,6 +71,22 @@ for category in ["./works/*/*.html","./blog/*/*.html"]:
             onew = re.sub("<!--置換用タグ1-->.*<!--置換用タグ2-->",metatag,nakami,flags=re.DOTALL)
         with open(url,mode="w") as file:
             file.write(onew)
+
+#   mkdir dist
+if not os.path.exists("./dist"):
+    os.mkdir("./dist")
+
+
+for category in ["css", "works", "blog"]:
+    files = glob.glob(category)
+    for url in files:
+        copytree(url,"./dist/" + url)
+
+copyfile("index.html","./dist/index.html")
+copyfile("404.html","./dist/404.html")
+copyfile("CNAME","./dist/CNAME")
+
+
 
 print("Done!!")
 
