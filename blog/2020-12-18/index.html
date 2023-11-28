@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="theme-color" content="#f47120">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+
+    <link rel="stylesheet" href="../../css/styles/tomorrow-night.css">
+    <script src="../../css/highlight/highlight.pack.js"></script>
+    <link href="../../css/lnln.css" rel="stylesheet">
+    <link href="../../css/blog.css" rel="stylesheet">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@lnln_ch">
+    <!--置換用タグ1-->
+    <meta property="og:url" content="https://lnln.dev/blog/2020-12-18">
+    <meta property="og:title" content="りんりん - DiscordでLaTeXを書きたい">
+    <!--置換用タグ2-->
+    <meta property="og:description" content="個人的な適当な記録です">
+    <meta property="og:image" content="https://lnln.dev/blog/2020-12-18/thumbnail.png">
+
+    <title>りんりん - DiscordでLaTeXを書きたい</title>
+  </head>
+
+<body ontouchstart=""><div class="main">
+<header>
+  <a href="https://lnln.dev"><h1>りんりん</h1></a>
+</header>
+
+<div class="lside"></div>
+<div class="rside"></div>
+
+<div class="sections">
+  <a class="linkbutton" href="https://lnln.dev">homeに戻る</a> <a class="linkbutton" href="https://lnln.dev/blog">ブログ</a>
+
+  <div class="date">2020/12/18</div class="date">
+  
+  <section>
+  
+  <h2>DiscordでLaTeXを書きたい</h2>
+  <p>
+    工学研究部のドベカレ(<a href="https://adventar.org/calendars/5692">UEC koken Advent Calendar 2020</a>)の記事です。
+
+    昨年、私が浪人していた頃、はこだて未来大学に在籍している私の友人にとあるLT会に誘われました。夏休みの自由研究発表といった形で行われた1年生のLT会で、そこで私は初めてdiscordのbotとpythonに出会いました。以来、自作の謎botを高校のオタク友人らのサーバで動かしていました。そしてつい先日、金曜の夕方vcをしていたところ…
+    
+    友人「お前のbotでlatex書けねえの？」
+    血迷った私「できるんじゃね？日曜までに作るわ！」
+    
+    他人事ですよね。作るのは私なんですけど！！そんなこんなでtex文書をコンパイルしてpngで返すbotを作りました。 動作環境はlubuntu18.04、python3.7.6です。ちなみに金曜日なので部室で部会に参加していたのですが、部屋にいた部員の皆さんの反応は「要らなくね？笑」一色でした。まあ私も要らないと思います。それでは作り始めます。とりあえず構想はこんな形です。
+    
+    メッセージうけとる
+    ↓
+    何かに渡す
+    ↓
+    生成されたpngを送り返す
+    
+    できました。
+  </p>
+
+  <pre><code>
+    if message.content.startswith("```latex"):
+          text = message.content
+          text = text[8:-3]
+          #```latex〜```を取り外す
+  
+          imgpath = "./latexondiscord/image.png"
+          #生成される画像のパス
+  
+          formerupdatetime = os.path.getctime(imgpath) #画像の更新時刻を確認
+          latexmessage(text) #画像作成(「何か」の部分)
+          nowupdatetime = os.path.getctime(imgpath) #画像の更新時刻を確認
+          if formerupdatetime == nowupdatetime: #画像の更新がされていないとき
+              await message.channel.send("Syntax error!!")
+          else: #画像がきちんと更新されているとき
+              await message.channel.send(file=discord.File(imgpath))
+  </code></pre>
+
+  <p>
+    
+    では「何か」を作っていきます。計画は次のような感じです。
+    
+    テキストを受け取る
+    ↓
+    用意してあるテンプレの\begin{document}〜\end{document}の中に入れる
+    ↓
+    なんか
+    ↓
+    できた画像のパスを返す
+    
+    「なんか」の部分の候補はいくつかありましたが、今回は
+    
+    platex→dvipdfmx→pdfcrop→mutool
+    
+    という形にしました。pdfcropで余白を切り取って、mutoolでpngにしています。dviからいきなりpngにしてしまうやり方など、他にも色々あるようですがこれで動いたのでヨシとしました。
+    
+    「なんか」を書きました。
+  </p>
+
+  <pre><code>
+  #!/bin/sh
+  cd ./latexondiscord &&
+  yes x | platex ./latex-on-discord.tex >/dev/null 2>&1 &&
+  dvipdfmx ./latex-on-discord.dvi >/dev/null 2>&1 &&
+  pdfcrop --margins "5 5 5 5" ./latex-on-discord.pdf ./croped.pdf >/dev/null 2>&1 &&
+  mutool draw -r 600 -o ./image.png ./croped.pdf >/dev/null 2>&1
+  </code></pre>
+
+  <p>
+    yes xの部分はエラーが出てもplatexの処理が止まらないようにgottiくんがつけてくれました。ありがとうございます。
+    さて、問題はここからです。みなさんご存知のようにlatexではバックスラッシュを用いますが、これをpythonで文字列として扱おうとすると\bや\nなどがうまく書けません。そこで次のようにしました。
+  </p>
+
+  <pre><code>
+    def latexmessage(message):
+      text = repr(message) #バックスラッシュを2倍にしてくれるらしい
+      text = text[1:-1] #reprでつけられた''の囲いを外す
+  
+      #テンプレを開く
+      with open("./latexondiscord/latex-on-discord-template.tex") as file:
+          nakami = file.read()
+          #文章を挿入
+          onew = re.sub("ここに文章を挿入",text, nakami,flags=re.DOTALL)
+  
+      #コンパイルする方のファイルを開く
+      with open("./latexondiscord/latex-on-discord.tex", mode="w") as file:
+          file.write(onew) #書き込む
+  
+      #シェルスクリプトにコンパイルしてもらう
+      subprocess.run('./latexondiscord/textopng.sh')
+  </code></pre>
+
+  <p>
+    あらかじめ用意したテンプレートには「ここに文章を挿入」と記した部分が\begin{document}〜\end{document}で囲われているのでそこを置換して別のファイルに保存します。
+    それでは全体像です。
+  </p>
+  
+  <pre><code>
+    import discord
+    import re
+    import subprocess
+    import os
+    
+    # 自分のBotのアクセストークン
+    with open("bot.token") as tokenfile:
+        TOKEN = tokenfile.read()
+    
+    with open("./latexondiscord/image.png", mode="w") as file:
+        file.write("") #仮の画像ファイル
+    
+    # 接続に必要なオブジェクトを生成
+    client = discord.Client()
+    
+    # 起動時に動作する処理
+    @client.event
+    async def on_ready():
+        # 起動したらターミナルにログイン通知が表示される
+        print('LaTeX botがログインしました')
+        
+    
+    # メッセージ受信時に動作する処理
+    @client.event
+    async def on_message(message):
+    
+        # メッセージ送信者がBotだった場合は無視する
+        if message.author.bot:
+            return
+    
+        #latex文法
+        if message.content.startswith("```latex"):
+            text = message.content
+            text = text[8:-3]
+            #```latex〜```を取り外す
+    
+            imgpath = "./latexondiscord/image.png"
+            #生成される画像のパス
+    
+            formerupdatetime = os.path.getctime(imgpath) #画像の更新時刻を確認
+            latexmessage(text) #画像作成
+            nowupdatetime = os.path.getctime(imgpath) #画像の更新時刻を確認
+            if formerupdatetime == nowupdatetime: #画像の更新がされていないとき
+                await message.channel.send("Syntax error!!")
+            else: #画像がきちんと更新されているとき
+                await message.channel.send(file=discord.File(imgpath))
+    
+    
+    def latexmessage(message):
+        text = repr(message) #バックスラッシュを2倍にしてくれるらしい
+        text = text[1:-1] #reprでつけられた''の囲いを外す
+    
+        #テンプレを開く
+        with open("./latexondiscord/latex-on-discord-template.tex") as file:
+            nakami = file.read()
+            #文章を挿入
+            onew = re.sub("ここに文章を挿入",text, nakami,flags=re.DOTALL)
+    
+        #コンパイルする方のファイルを開く
+        with open("./latexondiscord/latex-on-discord.tex", mode="w") as file:
+            file.write(onew) #書き込む
+    
+        #シェルスクリプトにコンパイルしてもらう
+        subprocess.run('./latexondiscord/textopng.sh')
+    
+    # Botの起動とDiscordサーバーへの接続
+    client.run(TOKEN)
+  </code></pre>
+  
+  <p>
+    githubにあげておきました。
+    <a href="https://github.com/ybasviel/latex-on-discord">https://github.com/ybasviel/latex-on-discord</a>
+    
+    
+    使ってみた。(このころは文字サイズを変更していたので少し大きいです。)
+  </p>
+  <div class="subject-img"><a href="./001.png"><img src="./small-001.jpg"></a></div>
+  <p>
+    このセリフ、気持ち良すぎて絶頂しました。   
+  </p>
+  </section>
+
+  <div class="share">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="lnln_ch" data-lang="ja" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+</div>
+
+<footer><address>Made by lnln_ch</address></footer>
+</div></body></html>
