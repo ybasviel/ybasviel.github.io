@@ -243,6 +243,17 @@ li{
 	max-width: 60em;
 	letter-spacing: 0.6pt;
 }
+
+.archive{
+    padding-left: 0.5em;
+}
+.archive > details{
+    margin-bottom: 0.5em;
+}
+.archive > details > li{
+    margin-left: 1.75em;
+}
+
 pre{
 	width: 100%;
 	white-space: nowrap;
