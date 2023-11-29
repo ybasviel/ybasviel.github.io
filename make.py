@@ -153,7 +153,19 @@ def edit_url_and_title(category_name:Path):
 
             metatag = "\n    <meta property=\"og:url\" content=\"https://lnln.dev/" + re.sub("\./","",shorturl) \
                 + "\">\n    <meta property=\"og:title\" content=\"" + pagename + "\">\n"\
-                + "    <title>" + pagename + "</title>"
+                + "    <title>" + pagename + "</title>\n"
+
+            if os.path.exists(Path(url).parent/"small-thumbnail.jpg"):
+                metatag += '    <meta name="twitter:card" content="summary_large_image">\n'
+                metatag += '    <meta name="twitter:site" content="@lnln_ch">\n'
+                metatag += '    <meta property="og:description" content="趣味の工作の記録">\n'
+                metatag += f'    <meta property="og:image" content="https://lnln.dev/{remove_top_dir( Path(url).parent )}/small-thumbnail.jpg">\n'
+            else:
+                metatag += '    <meta name="twitter:card" content="summary">\n'
+                metatag += '    <meta name="twitter:site" content="@lnln_ch">\n'
+                metatag += '    <meta property="og:description" content="趣味の工作の記録">\n'
+                metatag += '    <meta property="og:image" content="https://lnln.dev/img/title.png">\n'
+
 
             onew = re.sub("<!--MetaTag-->",metatag,nakami,flags=re.DOTALL)
 
