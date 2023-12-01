@@ -43,7 +43,7 @@ ArduinoおよびESP32向けにしょっぱいライブラリを作ったので�
 
 
 ```cpp
-#include &lt;wiiIRcam.h&gt;
+#include <wiiIRcam.h>
 #define SENSITIVITY 2
 
 wiiIRcam cam;
