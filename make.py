@@ -160,6 +160,11 @@ def edit_url_and_title(category_name:Path):
                 metatag += '    <meta name="twitter:site" content="@lnln_ch">\n'
                 metatag += '    <meta property="og:description" content="趣味の工作の記録">\n'
                 metatag += f'    <meta property="og:image" content="https://lnln.dev/{remove_top_dir( Path(url).parent )}/small-thumbnail.jpg">\n'
+            elif os.path.exists(Path(url).parent/"thumbnail.jpg"):
+                metatag += '    <meta name="twitter:card" content="summary_large_image">\n'
+                metatag += '    <meta name="twitter:site" content="@lnln_ch">\n'
+                metatag += '    <meta property="og:description" content="趣味の工作の記録">\n'
+                metatag += f'    <meta property="og:image" content="https://lnln.dev/{remove_top_dir( Path(url).parent )}/thumbnail.jpg">\n'
             else:
                 metatag += '    <meta name="twitter:card" content="summary">\n'
                 metatag += '    <meta name="twitter:site" content="@lnln_ch">\n'
