@@ -41,6 +41,9 @@ def convert_md(category_name:Path):
                 html_template = template.read()
                 html = html_template.replace("<!--ContentTag-->",html)
 
+                if category_name == "blog":
+                    html = html.replace("<!--DateTag-->",md_file_path.parts[-2])
+
             with open(OUTPUT_DIR/md_file_path.parent/"index.html", mode="w") as file:
                 #print(OUTPUT_DIR/md_file_path/md_file_name.with_suffix('.html'))
                 os.remove(OUTPUT_DIR/md_file_path.with_suffix('.md'))
