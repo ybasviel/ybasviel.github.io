@@ -307,7 +307,7 @@ code{
 
 @media (max-width:66em){
 	pre{
-		width: calc(100vw - 3.5em);
+		max-width: 90vw;
 		-webkit-overflow-scrolling: touch;
 	}
 }
