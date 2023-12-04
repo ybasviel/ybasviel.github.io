@@ -20,7 +20,7 @@ def remove_top_dir(p:Path):
 
 
 def convert_md(category_name:Path):
-    markdown_obj = markdown.Markdown(extensions=['fenced_code'])
+    markdown_obj = markdown.Markdown(extensions=['fenced_code', 'tables'])
 
     # ls blog html files
     src_file_name = Path(category_name + "/*/*.md")
