@@ -207,6 +207,13 @@ td {
 	padding: 10px 15px;
 }
 
+
+a {
+	/*word-break: break-all;*/
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
 ul{
 	margin-left:1em;
 	margin-top: 0.5em;
@@ -300,7 +307,7 @@ code{
 
 @media (max-width:66em){
 	pre{
-		width: calc(100vw - 2.5em);
+		width: calc(100vw - 3.5em);
 		-webkit-overflow-scrolling: touch;
 	}
 }
