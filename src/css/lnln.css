@@ -243,6 +243,7 @@ pre{
 	min-width: 0;
 }
 code{
+	border-radius: 0.5em;
 	white-space: pre;
 	overflow-x: auto;
 }
@@ -264,6 +265,10 @@ code{
 	}
 
 	a{color:#93d7f7;}
+
+	td {
+		background-color: #2c3e50;
+	}
 
 	.linkbutton {
 		color: #fff;
