@@ -221,6 +221,9 @@ ul{
 }
 li{
 	max-width: 60em;
+	word-break: break-all;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
 .archive{
