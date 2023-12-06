@@ -6,6 +6,7 @@ import os
 from shutil import copytree, copyfile
 from pathlib import Path
 import markdown
+from bs4 import BeautifulSoup
 
 
 NUMBER_OF_LATEST_BLOG = 3
@@ -18,6 +19,25 @@ TEMPLATE_DIR = Path("./templates")
 def remove_top_dir(p:Path):
     return p.relative_to(p.parts[0])
 
+
+def replace_img_to_figure(input_html):
+    soup = BeautifulSoup(input_html, 'html.parser')
+    img_tags = soup.find_all('img')
+
+    for img_tag in img_tags:
+        alt_text = img_tag.get('alt', '')
+        img_src = img_tag.get('src', '')
+        
+        if alt_text == '':
+            new_tag_str = f'<figure><a href="{img_src}"><img src="{img_src}"></a></figure>'
+        else:
+            new_tag_str = f'<figure><a href="{img_src}"><img src="{img_src}"></a><figcaption>{alt_text}</figcaption></figure>'
+
+        new_tag = BeautifulSoup(new_tag_str, 'html.parser')
+        img_tag.replace_with(new_tag)
+    
+    # Return the new HTML as a string
+    return str(soup)
 
 def convert_md(category_name:Path):
     markdown_obj = markdown.Markdown(extensions=['fenced_code', 'tables'])
@@ -39,6 +59,8 @@ def convert_md(category_name:Path):
             template_file_name = Path(category_name + "-template.html")
             with open(TEMPLATE_DIR/template_file_name, mode="r") as template:
                 html_template = template.read()
+
+                html = replace_img_to_figure(html)
                 html = html_template.replace("<!--ContentTag-->",html)
 
                 if category_name == "blog":
