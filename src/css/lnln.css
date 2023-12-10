@@ -75,7 +75,7 @@ figcaption::before { content: "「"; }
 figcaption::after { content: "」"; }
 
 figure > a > img { 
-	max-height: 600px;
+	max-height: 400px;
 	max-width: 98%;
 	border-radius: 0.3em;
 }
