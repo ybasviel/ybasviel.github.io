@@ -3,7 +3,7 @@
 import glob
 import re
 import os
-from shutil import copytree, copyfile
+from shutil import copytree, copyfile, rmtree
 from pathlib import Path
 import markdown
 from bs4 import BeautifulSoup
@@ -206,8 +206,10 @@ def edit_url_and_title(category_name:Path):
 
 if __name__ == "__main__":
     #   mkdir dist
-    if not os.path.exists(OUTPUT_DIR):
-        os.mkdir(OUTPUT_DIR)
+    if os.path.exists(OUTPUT_DIR):
+        rmtree(OUTPUT_DIR)
+    
+    os.mkdir(OUTPUT_DIR)
     
     for category in ["css", "works", "blog", "img"]:
         files = glob.glob( str(SRC_DIR/category) )
