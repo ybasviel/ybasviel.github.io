@@ -122,17 +122,22 @@ def put_blog_index_file():
 
 
 def put_works_index_file():
-    target_file_path = Path(SRC_DIR/"works/*")
-    url_paths = glob.glob( str(target_file_path) )
-    url_paths.sort(key=os.path.getmtime, reverse=True)
+    target_file_path = Path(SRC_DIR/"works/*/*.md")
+    url_paths_str:str = glob.glob( str(target_file_path) )
 
-    url_paths = [path for path in url_paths if not os.path.isfile(path)]
+    url_paths = [Path(p) for p in url_paths_str]
 
-    url_paths = [remove_top_dir(Path(path)) for path in url_paths]
+    # url_paths.sort(reverse=True)
+    url_paths = sorted(url_paths, key=lambda x: x.name, reverse=True)
+
+    #url_paths = [path for path in url_paths if not os.path.isfile(path)]
+
+    url_paths = [remove_top_dir(path) for path in url_paths]
 
     html = ''
 
     for index, url in enumerate(url_paths):
+        url = url.parent
         #ファイルを開いて
         with open(OUTPUT_DIR/url/"index.html") as file:
             target_index_html = file.read()
