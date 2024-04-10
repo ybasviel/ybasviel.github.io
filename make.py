@@ -142,12 +142,19 @@ def put_works_index_file():
         with open(OUTPUT_DIR/url/"index.html") as file:
             target_index_html = file.read()
 
+            thumbnail_paths = glob.glob( str(OUTPUT_DIR/url/"*thumbnail.*") )
+            if len(thumbnail_paths) == 0:
+                thumbnail_path = ""
+            else:
+                thumbnail_path = str( remove_top_dir(Path(thumbnail_paths[0])) )
+
+
             # get title
             pagename = re.sub("</h1>.*", "",re.sub(".*<h1>","",target_index_html.replace('\n',' ')))
             page_description = re.sub("description-->.*", "",re.sub(".*<!--description","",target_index_html.replace('\n',' ')))
 
             html += '<div class="item">\n'
-            html += f'  <a href="./{url}"><img src="./{url}/small-thumbnail.jpg" alt="サムネイル"><br>'
+            html += f'  <a href="./{url}"><img src="./{thumbnail_path}" alt="サムネイル"><br>'
             html += '\n'
             html += f'    {pagename}'
             html += '\n'
