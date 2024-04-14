@@ -24,14 +24,11 @@ def replace_img_to_figure(input_html):
     soup = BeautifulSoup(input_html, 'html.parser')
     img_tags = soup.find_all('img')
 
-    for img_tag in img_tags:
+    for index, img_tag in enumerate(img_tags):
         alt_text = img_tag.get('alt', '')
         img_src = img_tag.get('src', '')
         
-        if alt_text == '':
-            new_tag_str = f'<figure><a href="{img_src}"><img src="{img_src}"></a></figure>'
-        else:
-            new_tag_str = f'<figure><a href="{img_src}"><img src="{img_src}"></a><figcaption>{alt_text}</figcaption></figure>'
+        new_tag_str = f'<figure><a href="{img_src}"><img src="{img_src}"></a><figcaption>Fig.{index + 1} {alt_text}</figcaption></figure>'
 
         new_tag = BeautifulSoup(new_tag_str, 'html.parser')
         img_tag.replace_with(new_tag)
