@@ -28,7 +28,7 @@ def replace_img_to_figure(input_html):
         alt_text = img_tag.get('alt', '')
         img_src = img_tag.get('src', '')
         
-        new_tag_str = f'<figure><a href="{img_src}"><img src="{img_src}"></a><figcaption>Fig.{index + 1} {alt_text}</figcaption></figure>'
+        new_tag_str = f'<figure><a href="{img_src}"><img src="{img_src}"></a><figcaption>図{index + 1} {alt_text}</figcaption></figure>'
 
         new_tag = BeautifulSoup(new_tag_str, 'html.parser')
         img_tag.replace_with(new_tag)
