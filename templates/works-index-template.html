@@ -11,6 +11,18 @@
     <meta property="og:description" content="趣味の工作の記録">
     <meta property="og:image" content="https://lnln.dev/img/title.png">
 
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const links = Array.from(document.querySelectorAll("a"));
+        for (const link of links) {
+          if (link.hostname !== window.location.hostname) {
+              link.target = "_blank";
+              link.rel = "noopener noreferrer";
+          }
+        }
+      });
+    </script>
+
     <title>なかがわ電機サービス</title>
     <link href="./css/lnln.css" rel="stylesheet">
   </head>
