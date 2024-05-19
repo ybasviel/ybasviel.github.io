@@ -153,13 +153,13 @@ def put_works_index_file():
             pagename = re.sub("</h1>.*", "",re.sub(".*<h1>","",target_index_html.replace('\n',' ')))
             page_description = re.sub("description-->.*", "",re.sub(".*<!--description","",target_index_html.replace('\n',' ')))
 
-            html += '<div class="item">\n'
-            html += f'  <a href="./{url}"><img src="./{thumbnail_path}" alt="サムネイル"><br>'
+            html += '<div class="w-72 m-4">\n'
+            html += f'  <a href="./{url}"><img src="./{thumbnail_path}" alt="サムネイル" class="w-full aspect-[4/3] object-cover rounded-lg">'
             html += '\n'
-            html += f'    {pagename}'
+            html += f'    <h3 class="mt-2 text-xl font-bold text-center text-cyan-600">{pagename}</h3>'
             html += '\n'
             html += '  </a>\n'
-            html += f'  <p>{page_description}</p>'
+            html += f'  <p class="p-2">{page_description}</p>'
             html += '</div>\n\n'
 
     #print(html)
