@@ -69,11 +69,6 @@ figure{
 	margin-bottom: 2em;
 }
 
-
-figcaption::before { content: "「"; }
-
-figcaption::after { content: "」"; }
-
 figure > a > img { 
 	max-height: 400px;
 	max-width: 98%;
