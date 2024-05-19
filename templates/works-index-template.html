@@ -11,6 +11,7 @@
     <meta property="og:description" content="趣味の工作の記録">
     <meta property="og:image" content="https://lnln.dev/img/title.png">
 
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function() {
         const links = Array.from(document.querySelectorAll("a"));
@@ -24,66 +25,81 @@
     </script>
 
     <title>なかがわ電機サービス</title>
-    <link href="./css/lnln.css" rel="stylesheet">
+    
   </head>
 
-<body ontouchstart=""><div class="main">
-<header>
-  <a href="/"><div>なかがわ電機サービス</div></a>
+<body ontouchstart="">
+<header class="bg-orange-500 m-4 p-4 rounded-lg">
+  <a href="/"><h1 class="text-white text-3xl">なかがわ電機サービス</h1></a>
 </header>
 
 <div class="sections">
 
-  <section>
-    <h1>Works</h1>
-    <div class="itemize">
+  <section class="bg-gray-100 m-4 p-4 rounded-lg">
+    <h2 class="text-2xl text-orange-500 font-bold mb-4">Works</h2>
+    <div class="flex flex-wrap place-content-evenly">
 
       <!--ContentLink-->
+      <div class="w-72 m-4">
+        <a href="./works/AppleMusicTwitterCard"><img src="../src/works/AppleMusicTwitterCard/small-thumbnail.jpg" alt="サムネイル" class="w-full aspect-[4/3] object-cover rounded-lg">
+          <h3 class="mt-2 text-lg font-bold text-cyan-600">Apple Music Thumbnail Tweet Shortcut</h3>
+        </a>
+        <p class="p-2"> Apple Musicのリンクをツイートするときにサムネイルを表示させるようにするiosのショートカット </p></div>
+        <div class="w-72 m-4">
+          <a href="./works/AppleMusicTwitterCard"><img src="../src/works/LowCostFilamentBox/small-thumbnail.jpg" alt="サムネイル" class="w-full aspect-[4/3] object-cover rounded-lg">
+            <h3 class="mt-2 text-lg font-bold text-cyan-600">Apple Music Thumbnail Tweet Shortcut</h3>
+          </a>
+          <p class="p-2"> Apple Musicのリンクをツイートするときにサムネイルを表示させるようにするiosのショートカット </p></div>
+          <div class="w-72 m-4">
+            <a href="./works/AppleMusicTwitterCard"><img src="../src/works/artificial-tail/thumbnail.jpg" alt="サムネイル" class="w-full aspect-[4/3] object-cover rounded-lg">
+              <h3 class="mt-2 text-lg font-bold text-cyan-600">Apple Music Thumbnail Tweet Shortcut</h3>
+            </a>
+            <p class="p-2"> Apple Musicのリンクをツイートするときにサムネイルを表示させるようにするiosのショートカット </p></div>
 
     </div>
   </section>
 
-  <section>
-    <h1>Blog</h1>
-    <ul>
-      <li><a href="./blog/">blog</a></li>
+  <section class="bg-gray-100 m-4 p-4 rounded-lg">
+    <h2 class="text-2xl text-orange-500 font-bold mb-4">Blog</h2>
+    <ul class="list-disc m-4">
+      <li><a href="./blog/" class="text-cyan-600">blog</a></li>
     </ul>
   </section>
 
-  <section>
-    <h1>SNS</h1>
+  <section class="bg-gray-100 m-4 p-4 rounded-lg">
+    <h2 class="text-2xl text-orange-500 font-bold mb-4">SNS</h2>
 
-    <ul>
-      <li><a href="https://www.twitter.com/lnln_ch" target="_blank">Twitter (@lnln_ch)</a></li>
-      <li><a href="https://www.instagram.com/lnln_ch" target="_blank">Instagram (@lnln_ch)</a></li>
-      <li><a rel="me" href="https://mstdn.maud.io/@sa_1mn" target="_blank">sa_1mn @mstdn.maud.io</a></li>
+    <ul class="list-disc m-4">
+      <li><a href="https://www.twitter.com/lnln_ch"  class="text-cyan-600">Twitter (@lnln_ch)</a></li>
+      <li><a href="https://www.instagram.com/lnln_ch"  class="text-cyan-600">Instagram (@lnln_ch)</a></li>
+      <li><a rel="me" href="https://mstdn.maud.io/@sa_1mn"  class="text-cyan-600">sa_1mn @mstdn.maud.io</a></li>
     </ul>
 
   </section>
 
-  <section>
-    <h1>Links</h1>
+  <section class="bg-gray-100 m-4 p-4 rounded-lg">
+    <h2 class="text-2xl text-orange-500 font-bold mb-4">Links</h2>
     <p>いつの間にか僕のサイトのリンクが友人や先輩や後輩のサイトに貼られていたので、私も貼って相互にします</p>
 
-    <ul>
-      <li><a href="https://gotti.dev" target="_blank">ごっち(gotti.dev)</a></li>
-      <li><a href="https://azukibar.dev" target="_blank">アイスの棒(azukibar.dev)</a></li>
-      <li><a href="https://www.hutinoatari.dev/" target="_blank">捻れたバベル(hutinoatari.dev)</a></li>
-      <li><a href="https://mocchan.dev" target="_blank">Lunatic電通生もっちゃんの部屋(mocchan.dev)</a></li>
-      <li><a href="https://elmer9.github.io/" target="_blank">ファンサイト(elmer9.github.io)</a></li>
-      <li><a href="https://helkun.dev/" target="_blank">へる破壊財団(https://helkun.dev/)</a></li>
-      <li><a href="https://yuino.dev/" target="_blank">ゆいのページ(https://yuino.dev/)</a></li>
+    <ul class="list-disc m-4">
+      <li><a href="https://gotti.dev"  class="text-cyan-600">ごっち(gotti.dev)</a></li>
+      <li><a href="https://azukibar.dev"  class="text-cyan-600">アイスの棒(azukibar.dev)</a></li>
+      <li><a href="https://www.hutinoatari.dev/"  class="text-cyan-600">捻れたバベル(hutinoatari.dev)</a></li>
+      <li><a href="https://mocchan.dev"  class="text-cyan-600">Lunatic電通生もっちゃんの部屋(mocchan.dev)</a></li>
+      <li><a href="https://elmer9.github.io/"  class="text-cyan-600">ファンサイト(elmer9.github.io)</a></li>
+      <li><a href="https://helkun.dev/"  class="text-cyan-600">へる破壊財団(https://helkun.dev/)</a></li>
+      <li><a href="https://yuino.dev/"  class="text-cyan-600">ゆいのページ(https://yuino.dev/)</a></li>
     </ul>
 
   </section>
     
 
-  <div class="share">
+  <div class="m-4">
     <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-via="lnln_ch" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   </div>
 
 </div>
 
 
-<footer><address>Made by lnln_ch</address></footer>
-</div></body></html>
+<footer class="m-4 px-4 py-2 rounded-lg bg-orange-500 text-white ">Made by lnln_ch</footer>
+</body></html>
