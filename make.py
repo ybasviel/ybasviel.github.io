@@ -76,8 +76,8 @@ def put_blog_index_file():
 
     url_paths = [path for path in url_paths if not os.path.isfile(path)]
 
-    links_for_index_html ='<ul class="url-list">\n'
-    links_for_archive_list = '<ul class="archive">\n'
+    links_for_index_html ='<ul class="list-disc m-4">\n'
+    links_for_archive_list = '<ul class="list-disc m-4">\n'
     first = True
     
     for index, url in enumerate(url_paths):
@@ -94,19 +94,30 @@ def put_blog_index_file():
             date = re.sub("-","/",date)
 
             if index < NUMBER_OF_LATEST_BLOG:
-                links_for_index_html += f'      <li><a href="./{url}">{pagename} - {date}</a></li>\n'
+                links_for_index_html += f'''
+                <li><a class="text-cyan-600" href="./{url}">{pagename} - {date}</a></li>
+                '''
 
             if first:
-                links_for_archive_list += f'      <details><summary>{date[:-3]}</summary>\n        <li><a href="./{url}">{pagename} - {date}</a></li>\n'
+                links_for_archive_list += f'''
+                <details class="cursor-pointer"><summary>{date[:-3]}</summary>
+                  <li class="ml-6"><a class="text-cyan-600" href="./{url}">{pagename} - {date}</a></li>
+                '''
                 first = False
             elif former != date[:-3]:
-                links_for_archive_list += f'      </details>\n      <details><summary>{date[:-3]}</summary>\n        <li><a href="./{url}">{pagename} - {date}</a></li>\n'
+                links_for_archive_list += f'''
+                </details>
+                <details class="cursor-pointer"><summary>{date[:-3]}</summary>
+                  <li class="ml-6"><a class="text-cyan-600" href="./{url}">{pagename} - {date}</a></li>
+                '''
             else:
-                links_for_archive_list += f'        <li><a href="./{url}">{pagename} - {date}</a></li>\n'
+                links_for_archive_list += f'''
+                <li class="ml-6"><a class="text-cyan-600" href="./{url}">{pagename} - {date}</a></li>
+                '''
             former = date[:-3]
 
-    links_for_index_html += '    </ul class="url-list">'
-    links_for_archive_list += '      </ul></li>\n    </ul class="archive">'
+    links_for_index_html += '    </ul>'
+    links_for_archive_list += '      </ul></li>\n    </ul>'
 
     with open(TEMPLATE_DIR/"blog-index-template.html") as file:
         old_index_html_file = file.read()
