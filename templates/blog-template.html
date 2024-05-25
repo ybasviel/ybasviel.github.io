@@ -8,6 +8,7 @@
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function() {
         const links = Array.from(document.querySelectorAll("a"));
@@ -19,33 +20,28 @@
         }
       });
     </script>
-
-    <link href="../../css/lnln.css" rel="stylesheet">
-    <link href="../../css/blog.css" rel="stylesheet">
     
     <!--MetaTag-->
     
   </head>
 
-<body ontouchstart=""><div class="main">
-<header>
-  <a href="/"><div>なかがわ電機サービス</div></a>
+<body ontouchstart="" class="dark:bg-black">
+<header class="bg-orange-500 m-4 p-4 rounded-lg">
+  <a href="/"><h1 class="text-white text-3xl">なかがわ電機サービス</h1></a>
 </header>
 
-<div class="sections">
-  <a class="linkbutton" href="/">homeに戻る</a> <a class="linkbutton" href="/blog">ブログ</a>
-
-  <div class="date"><!--DateTag--></div class="date">
-  <section>
-    <!--ContentTag-->
-  </section>
-  
-  <div class="share">
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-lang="ja" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  </div>
-
+<div class="flex justify-between">
+  <a class="ml-6 text-cyan-600" href="/">homeに戻る</a>
+  <div class="mr-6 text-gray-400"><!--DateTag--></div>
 </div>
 
+<section class="bg-gray-100 m-4 p-4 rounded-lg dark:bg-gray-600">
+  <!--ContentTag-->
+</section>
+  
+<div class="ml-6">
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
 
-<footer><address>Made by lnln_ch</address></footer>
-</div></body></html>
+<footer class="m-4 px-4 py-2 rounded-lg bg-orange-500 text-white ">Made by lnln_ch</footer>
+</body></html>
