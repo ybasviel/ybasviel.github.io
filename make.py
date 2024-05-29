@@ -64,7 +64,7 @@ def add_table_centering(input_html):
     return soup.prettify()
 
 def convert_md(category_name:Path):
-    markdown_obj = markdown.Markdown(extensions=['fenced_code', 'tables'])
+    markdown_obj = markdown.Markdown(extensions=['fenced_code', 'tables', 'nl2br'])
 
     # ls blog html files
     src_file_name = Path(category_name + "/*/*.md")
