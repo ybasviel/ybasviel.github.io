@@ -11,4 +11,5 @@ tailwindcss_dict = {
     'table': 'rounded-lg overflow-hidden',
     'th': 'bg-orange-400 text-white py-2 px-4',
     'td': 'bg-white text-gray-900 py-2 px-4 border-t border-gray-200',
+    'blockquote': 'border-l-4 border-orange-500 bg-gray-100 text-gray-800 p-4 italic rounded-lg shadow-lg dark:bg-gray-600 dark:text-gray-100',
 }
