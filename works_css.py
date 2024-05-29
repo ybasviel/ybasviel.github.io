@@ -2,7 +2,7 @@ tailwindcss_dict = {
     'h1': 'text-3xl text-orange-500 font-bold mb-4',
     'h2': 'text-2xl text-orange-500 font-bold my-4',
     'h3': 'text-xl text-orange-500 font-bold my-4',
-    'p': 'mb-4',
+    'p': '',
     'ul': 'list-disc m-4',
     'ol': 'list-decimal m-4',
     'li': 'm-4',
@@ -11,5 +11,5 @@ tailwindcss_dict = {
     'table': 'rounded-lg overflow-hidden',
     'th': 'bg-orange-400 text-white py-2 px-4',
     'td': 'bg-white text-gray-900 py-2 px-4 border-t border-gray-200',
-    'blockquote': 'border-l-4 border-orange-500 bg-gray-100 text-gray-800 p-4 italic rounded-lg shadow-lg dark:bg-gray-600 dark:text-gray-100',
+    'blockquote': 'border-l-4 border-orange-500 bg-white text-gray-800 p-2 my-4 italic rounded-lg shadow-lg dark:bg-gray-600 dark:text-gray-100',
 }
