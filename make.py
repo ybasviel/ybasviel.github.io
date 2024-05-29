@@ -7,7 +7,7 @@ from shutil import copytree, copyfile, rmtree
 from pathlib import Path
 import markdown
 from bs4 import BeautifulSoup
-
+from works_css import tailwindcss_dict
 
 NUMBER_OF_LATEST_BLOG = 3
 
@@ -19,22 +19,49 @@ TEMPLATE_DIR = Path("./templates")
 def remove_top_dir(p:Path):
     return p.relative_to(p.parts[0])
 
+def add_tailwind_class(html):
+    soup = BeautifulSoup(html, 'lxml')
+
+    for key in tailwindcss_dict.keys():
+
+        founded_tags = soup.find_all(key)
+        for tag in founded_tags:
+
+            if 'class' not in tag.attrs:
+                tag['class'] = tailwindcss_dict[key]
+            else:
+                tag['class'].append(tailwindcss_dict[key])
+
+    return soup.prettify()
 
 def replace_img_to_figure(input_html):
-    soup = BeautifulSoup(input_html, 'html.parser')
+    soup = BeautifulSoup(input_html, 'lxml')
     img_tags = soup.find_all('img')
 
     for index, img_tag in enumerate(img_tags):
         alt_text = img_tag.get('alt', '')
         img_src = img_tag.get('src', '')
         
-        new_tag_str = f'<figure><a href="{img_src}"><img src="{img_src}"></a><figcaption>図{index + 1} {alt_text}</figcaption></figure>'
+        new_tag_str = f'<figure><div class="flex items-center justify-center"><a href="{img_src}"><img class="w-96 rounded-lg" src="{img_src}"></a></div><figcaption class="text-center mt-2">図{index + 1} {alt_text}</figcaption></figure>'
 
-        new_tag = BeautifulSoup(new_tag_str, 'html.parser')
+        new_tag = BeautifulSoup(new_tag_str, 'lxml')
         img_tag.replace_with(new_tag)
     
     # Return the new HTML as a string
-    return str(soup)
+    return soup.prettify()
+
+def add_table_centering(input_html):
+    soup = BeautifulSoup(input_html, 'lxml')
+    table_tags = soup.find_all('table')
+
+    for table_tag in table_tags:
+        
+        new_tag_str = f'<div class="flex items-center justify-center">{table_tag.prettify()}</div>'
+
+        new_tag = BeautifulSoup(new_tag_str, 'lxml')
+        table_tag.replace_with(new_tag)
+    
+    return soup.prettify()
 
 def convert_md(category_name:Path):
     markdown_obj = markdown.Markdown(extensions=['fenced_code', 'tables'])
@@ -58,6 +85,9 @@ def convert_md(category_name:Path):
                 html_template = template.read()
 
                 html = replace_img_to_figure(html)
+                html = add_table_centering(html)
+                html = add_tailwind_class(html)
+
                 html = html_template.replace("<!--ContentTag-->",html)
 
                 if category_name == "blog":
@@ -88,8 +118,12 @@ def put_blog_index_file():
             url = str(url)
             nakami = file.read()
 
-            # get title
-            pagename = re.sub("</h1>.*", "",re.sub(".*<h1>","",nakami.replace('\n',' ')))
+            soup = BeautifulSoup(nakami, 'lxml')
+            h1_tags = soup.find_all('h1')
+
+            for h1_tag in h1_tags:
+                pagename = h1_tag.get_text(strip=True) 
+
             date = url[-10:]
             date = re.sub("-","/",date)
 
@@ -158,7 +192,14 @@ def put_works_index_file():
 
 
             # get title
-            pagename = re.sub("</h1>.*", "",re.sub(".*<h1>","",target_index_html.replace('\n',' ')))
+            soup = BeautifulSoup(target_index_html, 'lxml')
+            h1_tags = soup.find_all('h1')
+
+            for h1_tag in h1_tags:
+                pagename = h1_tag.get_text(strip=True)
+                
+
+            # get description
             page_description = re.sub("description-->.*", "",re.sub(".*<!--description","",target_index_html.replace('\n',' ')))
 
             html += '<div class="w-72 m-4">\n'
@@ -189,7 +230,11 @@ def edit_url_and_title(category_name:Path):
         with open(url) as file:
             nakami = file.read()
 
-            pagename = re.sub("</h1>.*", "",re.sub(".*<h1>","",nakami.replace('\n',' ')))
+            soup = BeautifulSoup(nakami, 'lxml')
+            h1_tags = soup.find_all('h1')
+
+            for h1_tag in h1_tags:
+                pagename = h1_tag.get_text(strip=True)
 
             if url[-10:] == "index.html":
                 shorturl = url[:-11]
