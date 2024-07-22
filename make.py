@@ -42,7 +42,7 @@ def replace_img_to_figure(input_html):
         alt_text = img_tag.get('alt', '')
         img_src = img_tag.get('src', '')
         
-        new_tag_str = f'<figure class="m-4"><div class="flex items-center justify-center"><a href="{img_src}"><img class="w-96 rounded-lg" src="{img_src}"></a></div><figcaption class="text-center mt-2">図{index + 1} {alt_text}</figcaption></figure>'
+        new_tag_str = f'<figure class="m-4"><div class="flex items-center justify-center"><a href="{img_src}"><img class="w-auto rounded-lg" src="{img_src}"></a></div><figcaption class="text-center mt-2">図{index + 1} {alt_text}</figcaption></figure>'
 
         new_tag = BeautifulSoup(new_tag_str, 'lxml')
         img_tag.replace_with(new_tag)
