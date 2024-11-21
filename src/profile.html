@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="theme-color" content="#f47120">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/tomorrow-night-blue.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const links = Array.from(document.querySelectorAll("a"));
+        for (const link of links) {
+          if (link.hostname !== window.location.hostname) {
+              link.target = "_blank";
+              link.rel = "noopener noreferrer";
+          }
+        }
+      });
+    </script>
+    
+    <meta property="og:url" content="https://lnln.dev/profile.html">
+    <meta property="og:title" content="Profile">
+    <title>Profile</title>
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@lnln_ch">
+    <meta property="og:description" content="趣味の工作の記録">
+    <meta property="og:image" content="https://lnln.dev/lnln_ch_icon.jpg">
+    
+  </head>
+
+<body ontouchstart="" class="dark:bg-black">
+  <header class="bg-orange-500 m-4 p-4 rounded-lg">
+    <a href="/"><div class="text-white text-3xl">なかがわ電機サービス</div></a>
+  </header>
+
+
+<div class="container mx-auto px-4 max-w-screen-lg">
+  <a class="m-6 text-cyan-600" href="/">Home</a>
+  <section class="bg-gray-100 m-4 p-4 rounded-lg dark:bg-gray-800 dark:text-white">
+    <h1 class="text-3xl text-orange-500 font-bold mb-4">
+      Profile
+    </h1>
+
+    <div class="flex items-center justify-center">
+      <a class="text-cyan-600" href="lnln_ch_icon.jpg">
+       <img class="w-auto rounded-lg" src="lnln_ch_icon.jpg"/>
+      </a>
+    </div>
+
+    りんりん
+
+    <ul class="list-disc m-4">
+      <li><a href="https://www.twitter.com/lnln_ch"  class="text-cyan-600">Twitter (@lnln_ch)</a></li>
+      <li><a href="https://www.instagram.com/lnln_ch"  class="text-cyan-600">Instagram (@lnln_ch)</a></li>
+      <li><a rel="me" href="https://mstdn.maud.io/@sa_1mn"  class="text-cyan-600">sa_1mn @mstdn.maud.io</a></li>
+      <li><a rel="me" href="https://discordapp.com/users/316944552789540875"  class="text-cyan-600">discord @ybasviel</a></li>
+      <li><a rel="me" href="https://github.com/ybasviel"  class="text-cyan-600">github @ybasviel</a></li>
+    </ul>
+  </section>
+</div>
+
+<div class="m-4">
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+
+<footer class="m-4 px-4 py-2 rounded-lg bg-orange-500 text-white ">Made by lnln_ch</footer>
+</body></html>
