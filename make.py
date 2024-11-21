@@ -241,7 +241,7 @@ def edit_url_and_title(category_name:Path):
             else:
                 shorturl = url
 
-            metatag = "\n    <meta property=\"og:url\" content=\"https://lnln.dev/" + re.sub("\./","",shorturl) \
+            metatag = "\n    <meta property=\"og:url\" content=\"https://lnln.dev/" + shorturl.replace("dist/", "") \
                 + "\">\n    <meta property=\"og:title\" content=\"" + pagename + "\">\n"\
                 + "    <title>" + pagename + "</title>\n"
 
@@ -294,5 +294,5 @@ if __name__ == "__main__":
 
     #edit_url_and_title(category)
 
-    for file in ["404.html", "CNAME"]:
+    for file in ["404.html", "profile.html", "lnln_ch_icon.jpg", "CNAME"]:
         copyfile( SRC_DIR/file, OUTPUT_DIR/file )
