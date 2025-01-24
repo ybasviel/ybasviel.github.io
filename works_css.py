@@ -6,7 +6,7 @@ tailwindcss_dict = {
     'p': 'py-2',
     'ul': 'list-disc m-4',
     'ol': 'list-decimal m-4',
-    'li': 'm-4',
+    'li': 'my-2 mx-4',
     'a': 'text-cyan-600',
     'code': 'rounded-lg',
     'table': 'rounded-lg overflow-hidden',
