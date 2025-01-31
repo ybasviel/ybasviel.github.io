@@ -197,7 +197,6 @@ def put_works_index_file():
             if len(thumbnail_paths) == 0:
                 thumbnail_path = ""
             else:
-                print(url)
                 thumbnail_path = url/"small-thumbnail.webp"
 
 
