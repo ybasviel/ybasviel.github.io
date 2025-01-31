@@ -8,6 +8,7 @@ from pathlib import Path
 import markdown
 from bs4 import BeautifulSoup
 from works_css import tailwindcss_dict
+from PIL import Image
 
 NUMBER_OF_LATEST_BLOG = 3
 
@@ -15,6 +16,12 @@ SRC_DIR = Path("./src")
 OUTPUT_DIR = Path("./dist")
 TEMPLATE_DIR = Path("./templates")
 
+
+def convert_jpeg_to_webp_with_low_quality(input_file_path, output_file_path, quality=10):
+    # 画像を開く
+    with Image.open(input_file_path) as img:
+        # WebP形式に変換して保存
+        img.save(output_file_path, 'webp', quality=quality)
 
 def remove_top_dir(p:Path):
     return p.relative_to(p.parts[0])
@@ -41,8 +48,10 @@ def replace_img_to_figure(input_html):
     for index, img_tag in enumerate(img_tags):
         alt_text = img_tag.get('alt', '')
         img_src = img_tag.get('src', '')
-        
-        new_tag_str = f'<figure class="m-4"><div class="flex items-center justify-center"><a href="{img_src}"><img class="w-auto rounded-lg" src="{img_src}"></a></div><figcaption class="text-center mt-2">図{index + 1} {alt_text}</figcaption></figure>'
+
+        small_img_src = "small-" + str(Path(img_src).with_suffix('.webp'))
+
+        new_tag_str = f'<figure class="m-4"><div class="flex items-center justify-center"><a href="{img_src}"><img class="w-auto rounded-lg" src="{small_img_src}"></a></div><figcaption class="text-center mt-2">図{index + 1} {alt_text}</figcaption></figure>'
 
         new_tag = BeautifulSoup(new_tag_str, 'lxml')
         img_tag.replace_with(new_tag)
@@ -184,11 +193,12 @@ def put_works_index_file():
         with open(OUTPUT_DIR/url/"index.html") as file:
             target_index_html = file.read()
 
-            thumbnail_paths = glob.glob( str(OUTPUT_DIR/url/"*thumbnail.*") )
+            thumbnail_paths = glob.glob( str(OUTPUT_DIR/url/"small-thumbnail.webp") )
             if len(thumbnail_paths) == 0:
                 thumbnail_path = ""
             else:
-                thumbnail_path = str( remove_top_dir(Path(thumbnail_paths[0])) )
+                print(url)
+                thumbnail_path = url/"small-thumbnail.webp"
 
 
             # get title
@@ -245,16 +255,11 @@ def edit_url_and_title(category_name:Path):
                 + "\">\n    <meta property=\"og:title\" content=\"" + pagename + "\">\n"\
                 + "    <title>" + pagename + "</title>\n"
 
-            if os.path.exists(Path(url).parent/"small-thumbnail.jpg"):
+            if os.path.exists(Path(url).parent/"thumbnail.jpg"):
                 metatag += '    <meta name="twitter:card" content="summary_large_image">\n'
                 metatag += '    <meta name="twitter:site" content="@lnln_ch">\n'
                 metatag += '    <meta property="og:description" content="趣味の工作の記録">\n'
-                metatag += f'    <meta property="og:image" content="https://lnln.dev/{remove_top_dir( Path(url).parent )}/small-thumbnail.jpg">\n'
-            elif os.path.exists(Path(url).parent/"thumbnail.jpg"):
-                metatag += '    <meta name="twitter:card" content="summary_large_image">\n'
-                metatag += '    <meta name="twitter:site" content="@lnln_ch">\n'
-                metatag += '    <meta property="og:description" content="趣味の工作の記録">\n'
-                metatag += f'    <meta property="og:image" content="https://lnln.dev/{remove_top_dir( Path(url).parent )}/thumbnail.jpg">\n'
+                metatag += f'    <meta property="og:image" content="https://lnln.dev/{remove_top_dir( Path(url).parent )}/small-thumbnail.webp">\n'
             else:
                 metatag += '    <meta name="twitter:card" content="summary">\n'
                 metatag += '    <meta name="twitter:site" content="@lnln_ch">\n'
@@ -277,17 +282,23 @@ if __name__ == "__main__":
     os.mkdir(OUTPUT_DIR)
     
     for category in ["css", "works", "blog", "img"]:
-        files = glob.glob( str(SRC_DIR/category) )
-        for url in files:
-            url = Path(url)
-            url = remove_top_dir(url)
-            copytree(SRC_DIR/url, OUTPUT_DIR/url )
+        copytree(SRC_DIR/category, OUTPUT_DIR/category)
+
+
 
     for category in ["works", "blog"]:
         convert_md(category)
-        #put_index_file()
         edit_url_and_title(category)
-    
+
+        for path in Path(OUTPUT_DIR/category).glob("**/*.jpg"):
+            if path.is_file():
+                output_file_path = Path(path.parent) / f"small-{path.stem}.webp"
+                convert_jpeg_to_webp_with_low_quality(path, output_file_path, 10) 
+
+        for path in Path(OUTPUT_DIR/category).glob("**/*.png"):
+            if path.is_file():
+                output_file_path = Path(path.parent) / f"small-{path.stem}.webp"
+                convert_jpeg_to_webp_with_low_quality(path, output_file_path, 10) 
 
     put_blog_index_file()
     put_works_index_file()
