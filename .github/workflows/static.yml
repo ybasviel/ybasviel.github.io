@@ -38,7 +38,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          uv install
+          uv sync
 
       - name: Run make script
         run: |
