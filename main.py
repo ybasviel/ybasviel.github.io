@@ -221,12 +221,14 @@ def edit_url_and_title(category_name: Path):
             else:
                 shorturl = url
 
-            metatag = "\n    <meta property=\"og:url\" content=\"https://lnln.dev/" + str(shorturl.relative_to(OUTPUT_DIR)) \
-                + "\">\n    <meta property=\"og:title\" content=\"" + pagename + "\">\n"\
-                + "    <title>" + pagename + "</title>\n"
+            metatag = f'''
+            <meta property="og:url" content="https://lnln.dev/{remove_top_dir(shorturl)}">
+            <meta property="og:title" content="{pagename}">
+            <title>{pagename}</title>
+            '''
 
             if (url.parent/"thumbnail.jpg").exists():
-                metatag += '''
+                metatag += f'''
                 <meta name="twitter:card" content="summary_large_image">
                 <meta name="twitter:site" content="@lnln_ch">
                 <meta property="og:description" content="趣味の工作の記録">
