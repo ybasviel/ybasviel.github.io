@@ -1,8 +1,6 @@
 #!/bin/python3
 
-import glob
 import re
-import os
 from shutil import copytree, copyfile, rmtree
 from pathlib import Path
 import markdown
@@ -17,23 +15,21 @@ OUTPUT_DIR = Path("./dist")
 TEMPLATE_DIR = Path("./templates")
 
 
-def convert_jpeg_to_webp_with_low_quality(input_file_path, output_file_path, quality=10):
+def convert_jpeg_to_webp_with_low_quality(input_file_path: Path, output_file_path: Path, quality=10):
     # 画像を開く
     with Image.open(input_file_path) as img:
         # WebP形式に変換して保存
         img.save(output_file_path, 'webp', quality=quality)
 
-def remove_top_dir(p:Path):
+def remove_top_dir(p: Path) -> Path:
     return p.relative_to(p.parts[0])
 
 def add_tailwind_class(html):
     soup = BeautifulSoup(html, 'lxml')
 
     for key in tailwindcss_dict.keys():
-
         founded_tags = soup.find_all(key)
         for tag in founded_tags:
-
             if 'class' not in tag.attrs:
                 tag['class'] = tailwindcss_dict[key]
             else:
@@ -49,14 +45,19 @@ def replace_img_to_figure(input_html):
         alt_text = img_tag.get('alt', '')
         img_src = img_tag.get('src', '')
 
-        small_img_src = "small-" + str(Path(img_src).with_suffix('.webp'))
+        small_img_src = f"small-{Path(img_src).with_suffix('.webp')}"
 
-        new_tag_str = f'<figure class="m-4"><div class="flex items-center justify-center"><a href="{img_src}"><img class="w-auto rounded-lg" src="{small_img_src}"></a></div><figcaption class="text-center mt-2">図{index + 1} {alt_text}</figcaption></figure>'
-
+        new_tag_str = f'''
+        <figure class="m-4">
+          <div class="flex items-center justify-center">
+            <a href="{img_src}"><img class="w-auto rounded-lg" src="{small_img_src}"></a>
+          </div>
+          <figcaption class="text-center mt-2">図{index + 1} {alt_text}</figcaption>
+        </figure>
+        '''
         new_tag = BeautifulSoup(new_tag_str, 'lxml')
         img_tag.replace_with(new_tag)
     
-    # Return the new HTML as a string
     return soup.prettify()
 
 def add_table_centering(input_html):
@@ -64,32 +65,26 @@ def add_table_centering(input_html):
     table_tags = soup.find_all('table')
 
     for table_tag in table_tags:
-        
-        new_tag_str = f'<div class="flex items-center justify-center">{table_tag.prettify()}</div>'
-
-        new_tag = BeautifulSoup(new_tag_str, 'lxml')
-        table_tag.replace_with(new_tag)
+        div = soup.new_tag('div', attrs={'class': 'flex items-center justify-center'})
+        table_tag.wrap(div)
     
     return soup.prettify()
 
-def convert_md(category_name:Path):
+def convert_md(category_name: Path):
     markdown_obj = markdown.Markdown(extensions=['fenced_code', 'tables', 'nl2br'])
 
     # ls blog html files
-    src_file_name = Path(category_name + "/*/*.md")
-
-    md_files = glob.glob( str(SRC_DIR/src_file_name) )
-    md_files.sort(reverse=True) #key=os.path.getmtime, 
+    src_file_pattern = category_name / "*" / "*.md"
+    md_files = sorted(SRC_DIR.glob(str(src_file_pattern)), reverse=True)
 
     for index, md_file_path in enumerate(md_files):
-
         with open(md_file_path) as file:
             md_text = file.read()
             html = markdown_obj.convert(md_text)
 
-            md_file_path = remove_top_dir( Path(md_file_path) )
+            md_file_path = remove_top_dir(md_file_path)
             
-            template_file_name = Path(category_name + "-template.html")
+            template_file_name = Path(f"{category_name}-template.html")
             with open(TEMPLATE_DIR/template_file_name, mode="r") as template:
                 html_template = template.read()
 
@@ -97,32 +92,28 @@ def convert_md(category_name:Path):
                 html = add_table_centering(html)
                 html = add_tailwind_class(html)
 
-                html = html_template.replace("<!--ContentTag-->",html)
+                html = html_template.replace("<!--ContentTag-->", html)
 
-                if category_name == "blog":
-                    html = html.replace("<!--DateTag-->",md_file_path.parts[-2])
+                if category_name == Path("blog"):
+                    html = html.replace("<!--DateTag-->", md_file_path.parts[-2])
 
-            with open(OUTPUT_DIR/md_file_path.parent/"index.html", mode="w") as file:
-                #print(OUTPUT_DIR/md_file_path/md_file_name.with_suffix('.html'))
-                os.remove(OUTPUT_DIR/md_file_path.with_suffix('.md'))
+            output_path = OUTPUT_DIR / md_file_path.parent / "index.html"
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(output_path, mode="w") as file:
+                if (OUTPUT_DIR / md_file_path).exists():
+                    (OUTPUT_DIR / md_file_path).unlink()
                 file.write(html)
 
-
 def put_blog_index_file():
-    # ls blog html files
-    url_paths = glob.glob( str(OUTPUT_DIR/"blog/*") )
-    url_paths.sort(reverse=True)
-
-    url_paths = [path for path in url_paths if not os.path.isfile(path)]
+    url_paths = sorted([p for p in OUTPUT_DIR.glob("blog/*") if p.is_dir()], reverse=True)
 
     links_for_index_html ='<ul class="list-disc m-4">\n'
     links_for_archive_list = '<ul class="list-disc m-4">\n'
     first = True
     
     for index, url in enumerate(url_paths):
-        #ファイルを開いて
-        with open(url + "/index.html") as file:
-            url = remove_top_dir(Path(url))
+        with open(url / "index.html") as file:
+            url = remove_top_dir(url)
             url = remove_top_dir(url)
             url = str(url)
             nakami = file.read()
@@ -171,69 +162,49 @@ def put_blog_index_file():
     with open(OUTPUT_DIR/"blog/index.html", mode="w") as file:
         file.write(new_index_html_file)
 
-
 def put_works_index_file():
-    target_file_path = Path(SRC_DIR/"works/*/*.md")
-    url_paths_str:str = glob.glob( str(target_file_path) )
-
-    url_paths = [Path(p) for p in url_paths_str]
-
-    # url_paths.sort(reverse=True)
-    url_paths = sorted(url_paths, key=lambda x: x.name, reverse=True)
-
-    #url_paths = [path for path in url_paths if not os.path.isfile(path)]
-
+    target_file_pattern = "works/*/*.md"
+    url_paths = sorted([p for p in SRC_DIR.glob(target_file_pattern)], key=lambda x: x.name, reverse=True)
     url_paths = [remove_top_dir(path) for path in url_paths]
 
     html = ''
 
     for index, url in enumerate(url_paths):
         url = url.parent
-        #ファイルを開いて
         with open(OUTPUT_DIR/url/"index.html") as file:
             target_index_html = file.read()
 
-            thumbnail_paths = glob.glob( str(OUTPUT_DIR/url/"small-thumbnail.webp") )
-            if len(thumbnail_paths) == 0:
-                thumbnail_path = ""
-            else:
-                thumbnail_path = url/"small-thumbnail.webp"
+            thumbnail_paths = list(OUTPUT_DIR.glob(str(url/"small-thumbnail.webp")))
+            thumbnail_path = url/"small-thumbnail.webp" if thumbnail_paths else ""
 
-
-            # get title
             soup = BeautifulSoup(target_index_html, 'lxml')
             h1_tags = soup.find_all('h1')
 
             for h1_tag in h1_tags:
                 pagename = h1_tag.get_text(strip=True)
-                
 
-            # get description
             page_description = re.sub("description-->.*", "",re.sub(".*<!--description","",target_index_html.replace('\n',' ')))
 
-            html += '<div class="w-96 m-4">\n'
-            html += f'  <a href="./{url}"><img src="./{thumbnail_path}" alt="サムネイル" class="w-full aspect-[4/3] object-cover rounded-lg">'
-            html += '\n'
-            html += f'    <h3 class="mt-2 text-xl font-bold text-center text-cyan-600">{pagename}</h3>'
-            html += '\n'
-            html += '  </a>\n'
-            html += f'  <p class="p-2">{page_description}</p>'
-            html += '</div>\n\n'
+            html += f'''
+            <div class="w-96 m-4">
+              <a href="./{url}">
+                <img src="./{thumbnail_path}" alt="サムネイル" class="w-full aspect-[4/3] object-cover rounded-lg">
+              </a>
+              <h3 class="mt-2 text-xl font-bold text-center text-cyan-600">{pagename}</h3>
+              <p class="p-2">{page_description}</p>
+            </div>
+            '''
 
-    #print(html)
     with open(TEMPLATE_DIR/"works-index-template.html") as file:
         old_index_html_file = file.read()
-
         new_index_html_file = re.sub('<!--ContentLink-->',html, old_index_html_file,flags=re.DOTALL)
-
-        #print(new_index_html_file)
 
     with open(OUTPUT_DIR/"index.html", mode="w+") as file:
         file.write(new_index_html_file)
 
-def edit_url_and_title(category_name:Path):
-    target_file_path = Path(category_name + "/*/*.html")
-    files = glob.glob( str(OUTPUT_DIR/target_file_path) )
+def edit_url_and_title(category_name: Path):
+    target_file_pattern = category_name / "*" / "*.html"
+    files = OUTPUT_DIR.glob(str(target_file_pattern))
     
     for url in files:
         with open(url) as file:
@@ -245,64 +216,62 @@ def edit_url_and_title(category_name:Path):
             for h1_tag in h1_tags:
                 pagename = h1_tag.get_text(strip=True)
 
-            if url[-10:] == "index.html":
-                shorturl = url[:-11]
+            if url.name == "index.html":
+                shorturl = url.parent
             else:
                 shorturl = url
 
-            metatag = "\n    <meta property=\"og:url\" content=\"https://lnln.dev/" + shorturl.replace("dist/", "") \
-                + "\">\n    <meta property=\"og:title\" content=\"" + pagename + "\">\n"\
-                + "    <title>" + pagename + "</title>\n"
+            metatag = f'''
+            <meta property="og:url" content="https://lnln.dev/{remove_top_dir(shorturl)}">
+            <meta property="og:title" content="{pagename}">
+            <title>{pagename}</title>
+            '''
 
-            if os.path.exists(Path(url).parent/"thumbnail.jpg"):
-                metatag += '    <meta name="twitter:card" content="summary_large_image">\n'
-                metatag += '    <meta name="twitter:site" content="@lnln_ch">\n'
-                metatag += '    <meta property="og:description" content="趣味の工作の記録">\n'
-                metatag += f'    <meta property="og:image" content="https://lnln.dev/{remove_top_dir( Path(url).parent )}/small-thumbnail.webp">\n'
+            if (url.parent/"thumbnail.jpg").exists():
+                metatag += f'''
+                <meta name="twitter:card" content="summary_large_image">
+                <meta name="twitter:site" content="@lnln_ch">
+                <meta property="og:description" content="趣味の工作の記録">
+                <meta property="og:image" content="https://lnln.dev/{remove_top_dir(url.parent)}/small-thumbnail.webp">
+                '''
             else:
-                metatag += '    <meta name="twitter:card" content="summary">\n'
-                metatag += '    <meta name="twitter:site" content="@lnln_ch">\n'
-                metatag += '    <meta property="og:description" content="趣味の工作の記録">\n'
-                metatag += '    <meta property="og:image" content="https://lnln.dev/img/title.png">\n'
-
+                metatag += '''
+                <meta name="twitter:card" content="summary">
+                <meta name="twitter:site" content="@lnln_ch">
+                <meta property="og:description" content="趣味の工作の記録">
+                <meta property="og:image" content="https://lnln.dev/img/title.png">
+                '''
 
             onew = re.sub("<!--MetaTag-->",metatag,nakami,flags=re.DOTALL)
 
-        
-        with open( url, mode="w" ) as file:
+        with open(url, mode="w") as file:
             file.write(onew)
 
-
 if __name__ == "__main__":
-    #   mkdir dist
-    if os.path.exists(OUTPUT_DIR):
+    if OUTPUT_DIR.exists():
         rmtree(OUTPUT_DIR)
     
-    os.mkdir(OUTPUT_DIR)
+    OUTPUT_DIR.mkdir()
     
     for category in ["css", "works", "blog", "img"]:
         copytree(SRC_DIR/category, OUTPUT_DIR/category)
 
-
-
     for category in ["works", "blog"]:
-        convert_md(category)
-        edit_url_and_title(category)
+        convert_md(Path(category))
+        edit_url_and_title(Path(category))
 
-        for path in Path(OUTPUT_DIR/category).glob("**/*.jpg"):
+        for path in (OUTPUT_DIR/category).glob("**/*.jpg"):
             if path.is_file():
-                output_file_path = Path(path.parent) / f"small-{path.stem}.webp"
+                output_file_path = path.parent / f"small-{path.stem}.webp"
                 convert_jpeg_to_webp_with_low_quality(path, output_file_path, 10) 
 
-        for path in Path(OUTPUT_DIR/category).glob("**/*.png"):
+        for path in (OUTPUT_DIR/category).glob("**/*.png"):
             if path.is_file():
-                output_file_path = Path(path.parent) / f"small-{path.stem}.webp"
+                output_file_path = path.parent / f"small-{path.stem}.webp"
                 convert_jpeg_to_webp_with_low_quality(path, output_file_path, 10) 
 
     put_blog_index_file()
     put_works_index_file()
 
-    #edit_url_and_title(category)
-
     for file in ["404.html", "profile.html", "lnln_ch_icon.jpg", "CNAME"]:
-        copyfile( SRC_DIR/file, OUTPUT_DIR/file )
+        copyfile(SRC_DIR/file, OUTPUT_DIR/file)
