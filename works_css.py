@@ -1,8 +1,8 @@
 tailwindcss_dict = {
     'h1': 'text-3xl text-orange-500 font-bold mb-4',
-    'h2': 'text-2xl text-orange-500 font-bold my-4',
-    'h3': 'text-xl text-orange-500 font-bold my-4',
-    'h4': 'text-lg text-orange-500 font-bold my-4',
+    'h2': 'text-2xl text-teal-600 font-bold my-4',
+    'h3': 'text-xl text-teal-600 font-bold my-4',
+    'h4': 'text-lg text-teal-600 font-bold my-4',
     'p': 'py-2',
     'ul': 'list-disc m-4',
     'ol': 'list-decimal m-4',
